@@ -1,0 +1,44 @@
+##create bean daoImpl,this is a class
+## 引入外部模块
+#parse("/utils.vm")
+## 是否需要生成注解
+#set($needAnnotion=$!attrList.get(0).needAnnotation)
+package $!{bean.packageUrl};
+#if($needAnnotion)
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+#end
+
+/**
+ * @author ${annotation.authorName}
+ * @email  ${annotation.authorMail}
+ * @date   ${annotation.date}
+ */
+
+#if($needAnnotion)
+@Document(collection = "${bean.name}")
+#end
+public class $!{bean.name} {
+
+#foreach($node in $attrList)
+#if($needAnnotion)
+    @Field
+#end
+    private ${node.fieldType} ${node.attrName};
+
+#end
+#foreach($node in $attrList)
+    ## 声明Getter/Setter 函数名称变量
+    #set($methodName = "")
+    ## 将首字母第一位大写 赋值给methodName
+    #getLowercaseChar(${node.attrName})
+
+    public void set$methodName(${node.fieldType} ${node.attrName}){
+        this.${node.attrName} = ${node.attrName};
+    }
+
+    public ${node.fieldType} get$methodName(){
+        return this.${node.attrName};
+    }
+#end
+}

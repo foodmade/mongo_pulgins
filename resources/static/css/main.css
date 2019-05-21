@@ -1,0 +1,17 @@
+#sourceConfigView{
+    -fx-cursor: pointer;
+}
+
+#generateField{
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 12px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: rgb(85, 162, 85);
+    -fx-pref-width: 90;
+    -fx-pref-height: 8;
+    -fx-text-fill: WHITE;
+}
+
+#generateField:hover{
+    -fx-background-color: rgba(107, 146, 191, 0.59);
+}

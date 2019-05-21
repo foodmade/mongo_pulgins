@@ -1,0 +1,11 @@
+
+## 首字母大写
+#macro(getLowercaseChar $str)
+    #set($toUpperCaseName =  $str.substring(0,1).toUpperCase())
+    #set($endingName      =  $str.substring(1))
+    #set($methodName      = "$toUpperCaseName$endingName")
+#end
+## 字符串替换
+#macro(replaceAll $str $rule $replaceVal $out)
+    #set($out = $str.Replace($rule,$replaceVal))
+#end

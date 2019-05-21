@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane prefHeight="339.0" prefWidth="512.0" stylesheets="@../static/css/config.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.AuthorController">
+   <children>
+       <Label layoutX="14.0" layoutY="22.0" text="主   机：" />
+       <Label layoutX="10.0" layoutY="112.0" text="用户名：" />
+       <Label layoutX="11.0" layoutY="162.0" text="密   码：" />
+      <Label layoutX="14.0" layoutY="68.0" text="端   口：" />
+      <Label layoutX="11.0" layoutY="201.0" text="数据库：" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="23.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="70.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="114.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Label layoutX="11.0" layoutY="246.0" text="version：" />
+      <JFXButton fx:id="testButton" layoutX="11.0" layoutY="288.0" onAction="#linkTest" prefHeight="23.0" prefWidth="94.0" text="测试" />
+      <JFXButton layoutX="181.0" layoutY="288.0" onAction="#clearInput" text="重置" />
+      <JFXButton fx:id="submit" layoutX="94.0" layoutY="288.0" onAction="#submitConfig" prefHeight="23.0" prefWidth="48.0" text="保存" />
+      <TextField fx:id="hostField" layoutX="95.0" layoutY="15.0" prefHeight="15.0" prefWidth="147.0" promptText="请输入主机" text="106.75.233.202" />
+      <TextField fx:id="portField" layoutX="95.0" layoutY="60.0" prefHeight="32.0" prefWidth="147.0" promptText="27017" text="27017" />
+      <TextField fx:id="userField" layoutX="95.0" layoutY="105.0" prefHeight="32.0" prefWidth="147.0" promptText="movies" text="movies" />
+      <PasswordField fx:id="pwdField" layoutX="95.0" layoutY="150.0" prefHeight="32.0" prefWidth="147.0" text="chen19960119">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font></PasswordField>
+      <TextField fx:id="dataNameField" layoutX="95.0" layoutY="195.0" prefHeight="32.0" prefWidth="147.0" promptText="movie" text="movie" />
+      <Separator layoutX="249.0" layoutY="4.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="6.0" />
+      <TextArea fx:id="logTextArea" editable="false" layoutX="255.0" layoutY="3.0" prefHeight="335.0" prefWidth="255.0" wrapText="true">
+         <font>
+            <Font name="Microsoft YaHei UI" size="12.0" />
+         </font></TextArea>
+      <ComboBox fx:id="versionField" layoutX="95.0" layoutY="242.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
