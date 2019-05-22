@@ -1,34 +1,14 @@
-
+*{
+    -fx-font-family:"FontAwesome";
+    -fx-font-size: 12px;
+}
 
 .button{
-    -fx-padding: 0.7em 0.57em;
-    -fx-font-size: 12px;
-    -jfx-button-type: RAISED;
-    -fx-background-color: rgb(77,102,204);
-    -fx-pref-width: 50;
-    -fx-pref-height: 8;
-    -fx-text-fill: WHITE;
+    -fx-background-color: #E5E5E5;
 }
 
 .button:hover{
-    -fx-background-color: rgba(102, 169, 191, 0.59);
-}
-
-.text-field{
-    -fx-border-radius: 3px;
-    -fx-padding: 7px 0px;
-    -fx-padding-left: 5px;
-    -fx-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
-    -fx-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
-    -fx-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -fx-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    -fx-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
-}
-.text-field:focused{
-    -fx-border-color: #66afe9;
-    -fx-outline: 0;
-    -fx-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-    -fx-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+    -fx-background-color: rgba(130, 191, 158, 0.59);
 }
 
 .combo-box{

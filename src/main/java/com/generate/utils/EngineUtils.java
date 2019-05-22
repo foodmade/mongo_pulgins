@@ -9,7 +9,6 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**

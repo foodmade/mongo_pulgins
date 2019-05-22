@@ -12,6 +12,8 @@ import com.gui.ConfigGui;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
 import com.mongodb.DB;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -42,6 +44,8 @@ public class AuthorController implements Initializable {
     public JFXButton testButton;
     @FXML
     public TextArea logTextArea;
+    @FXML
+    public JFXButton clearButton;
     @FXML
     private JFXButton submit;
 
@@ -160,8 +164,10 @@ public class AuthorController implements Initializable {
         new Thread(()-> logTextArea.appendText(msg + "\n")).start();
     }
 
-    public void initComponentCss() {
-
+    private void initComponentCss() {
+        testButton.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.LINK,"15px"));
+        submit.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.SAVE,"15px"));
+        clearButton.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.RECYCLE,"15px"));
     }
 
     @Override

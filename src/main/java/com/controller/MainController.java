@@ -9,23 +9,19 @@ import com.generate.source.DBCacheControl;
 import com.generate.utils.CommonUtils;
 import com.gui.AutoSizeApplication;
 import com.gui.MainGui;
-import com.intellij.openapi.ui.Messages;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
@@ -34,12 +30,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class MainController {
+public class MainController implements Initializable {
 
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -67,6 +65,8 @@ public class MainController {
     public JFXCheckBox dbRefField;
     @FXML
     public JFXCheckBox idClassField;
+    @FXML
+    public JFXButton folderField;
 
     public void initDataSourceInfo(String dataName) {
 
@@ -154,22 +154,31 @@ public class MainController {
 
         //读取选择表中的字段信息
         List<ValNode> attrList = readSelectedTableFieldInfo(tableName);
+        if(attrList == null){
+            return;
+        }
         CreateJava createJava = new CreateJavaImpl();
         createJava.createEntity(entityName,attrList,path + "/" + outFilePath,packagePath);
-        alertMessage("生成完毕","Success",Alert.AlertType.INFORMATION);
+        alertMessage("提示","成功",Alert.AlertType.INFORMATION);
     }
 
     private List<ValNode> readSelectedTableFieldInfo(String tableName) {
 
         if(selectedDB == null){
-            alertMessage("Mongo连接为空,请重新打开软件初始化","提示", Alert.AlertType.ERROR);
+            alertMessage("提示","Mongo连接为空,请重新打开软件初始化", Alert.AlertType.ERROR);
             return null;
         }
         DBCollection collection = selectedDB.getCollection(tableName);
 
-        DBObject modelDBObject =  collection.findOne();
+        DBObject modelDBObject;
+        try {
+            modelDBObject = collection.findOne();
+        } catch (Exception e) {
+            alertMessage("提示", "尝试读取表信息失败,请重试" ,Alert.AlertType.WARNING);
+            return null;
+        }
         if(modelDBObject == null){
-            alertMessage("获取到的表中无数据,无法读取字段名称,请自行初始化数据库数据","提示", Alert.AlertType.WARNING);
+            alertMessage("提示","获取到的表中无数据,无法读取字段名称,请自行初始化数据库数据", Alert.AlertType.WARNING);
             return null;
         }
         List<ValNode> nodeList = new ArrayList<>();
@@ -191,5 +200,14 @@ public class MainController {
         Alert information = new Alert(alertType,message);
         information.setTitle(title);
         information.showAndWait();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initCommentCss();
+    }
+
+    private void initCommentCss() {
+        folderField.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.FOLDER));
     }
 }

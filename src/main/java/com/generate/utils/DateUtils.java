@@ -1,8 +1,8 @@
 package com.generate.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,7 +16,7 @@ import java.util.*;
  */
 public final class DateUtils {
 
-    transient static final Log logger = LogFactory.getLog(DateUtils.class);
+    transient static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
     /**
      * yyyy-MM-dd
@@ -467,7 +467,7 @@ public final class DateUtils {
         try {
             d = getFormaterDate().parse(strDate);
         } catch (ParseException e) {
-            logger.warn(e);
+            logger.warn(e.getMessage());
         }
         if (d != null) {
             c = Calendar.getInstance();
