@@ -8,7 +8,7 @@ public class Bean {
      private String lowerName;
      /** bean 路径 */
      private String beanUrl;
-     /** package 路径 */
+     /** package entity 路径 */
      private String packageUrl;
 
     public String getName() {

@@ -16,5 +16,7 @@ public interface CreateJava {
      */
     void createEntity(String fileName, List<ValNode> fieldList,String packageUrl,String outPath);
 
+    void createDao(String fileName,String packageUrl,String outPath);
+
     void createEntity(String fileName, List<ValNode> fieldList, String packageUrl, String outPath, HashMap<String,Object> otherConfig);
 }

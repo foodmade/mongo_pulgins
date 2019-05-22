@@ -16,14 +16,30 @@ import java.util.List;
 
 public class CreateJavaImpl implements CreateJava {
 
-
     @Override
     public void createEntity(String fileName, List<ValNode> fieldList,String packageUrl,String outPath) {
+        //获取模板
+        Template template = loadTemplate(EngineConst._ENGINE_ENTITY_TEMPLATE_VM_DEFAULT_PATH);
+        //写入Java文件
+        writeJavaFile(fileName,outPath,fieldList,packageUrl,template);
+    }
 
+    @Override
+    public void createDao(String fileName, String packageUrl, String outPath) {
+        //获取模板
+        Template template = loadTemplate(EngineConst._ENGINE_DAO_TEMPLATE_VM_DEFAULT_PATH);
+        //写入Java文件
+        writeJavaFile(fileName,outPath,null,packageUrl,template);
+    }
+
+    private Template loadTemplate(String vmPath){
         //获取模板引擎
         VelocityEngine ve = EngineUtils.loadVelocityEngine();
         //获取模板
-        Template template = ve.getTemplate(EngineConst._ENGINE_TEMPLATE_VM_DEFAULT_PATH);
+        return ve.getTemplate(vmPath);
+    }
+
+    private void writeJavaFile(String fileName,String outPath,List<ValNode> fieldList,String packageUrl,Template template){
         //初始化属性
         VelocityContext velocityContext = EngineUtils.initBeanAttr(fileName,outPath);
         //添加字段

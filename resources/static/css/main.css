@@ -23,3 +23,15 @@
 #folderField:hover{
     -fx-background-color: rgba(130, 191, 158, 0.59);
 }
+
+#annotationHelpField{
+    -fx-background-color: #E5E5E5;
+}
+
+#annotationHelpField:hover{
+    -fx-background-color: rgba(130, 191, 158, 0.59);
+}
+
+#tableListView{
+    -fx-background-color:WHITE;
+}

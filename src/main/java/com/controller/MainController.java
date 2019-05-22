@@ -1,12 +1,15 @@
 package com.controller;
 
 import com.custom.HBoxCell;
+import com.generate.common.exception.ParamsInvalidException;
 import com.generate.dao.CreateJava;
 import com.generate.dao.impl.CreateJavaImpl;
 import com.generate.model.ValNode;
 import com.generate.mongo.MongoExcludeTable;
 import com.generate.source.DBCacheControl;
+import com.generate.utils.Assert;
 import com.generate.utils.CommonUtils;
+import com.generate.utils.Const;
 import com.gui.AutoSizeApplication;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
@@ -60,13 +63,19 @@ public class MainController implements Initializable {
     @FXML
     public TextField outFileField;
     @FXML
-    public JFXCheckBox needAnnotationField;
+    public CheckBox needAnnotationField;
     @FXML
-    public JFXCheckBox dbRefField;
+    public CheckBox dbRefField;
     @FXML
-    public JFXCheckBox idClassField;
+    public CheckBox idClassField;
     @FXML
-    public JFXButton folderField;
+    public Button folderField;
+    @FXML
+    public TextField daoPackageField;
+    @FXML
+    public TextField daoOutFileField;
+    @FXML
+    public CheckBox daoCheckField;
 
     public void initDataSourceInfo(String dataName) {
 
@@ -118,7 +127,8 @@ public class MainController implements Initializable {
         DirectoryChooser fileChooser = new DirectoryChooser ();
         fileChooser.setTitle("选择目录");
         File directory = fileChooser.showDialog(MainGui.getMainWindowStage());
-        fieldProjectPath.setText(directory.getPath());
+        if(directory != null)
+            fieldProjectPath.setText(directory.getPath());
     }
 
     public void clickImage(MouseEvent mouseEvent) {
@@ -126,32 +136,36 @@ public class MainController implements Initializable {
     }
 
     public void generateJava(ActionEvent actionEvent) {
-        //开始生成java代码
-        //获取Java实体类名
-        String entityName = fieldEntityName.getText();
-        //获取项目所在目录
-        String path = fieldProjectPath.getText();
-        //获取包路径
-        String packagePath = packageField.getText();
-        //获取存放目录
-        String outFilePath = outFileField.getText();
-        String tableName = fieldTableName.getText();
-
-        if(path == null || path.equals("")){
-            alertMessage("提示","项目目录不能为空", Alert.AlertType.ERROR);
-            return;
+        //开始生成jEntity代码
+        try {
+            createEntity();
+            if(daoCheckField.isSelected()){
+                //开始生成Dao代码
+                createUtil();
+            }
+            alertMessage(Const._TIPS,Const._SUCCESS,Alert.AlertType.INFORMATION);
+        }catch (ParamsInvalidException e){
+            alertMessage(Const._TIPS,e.getErr_info(), Alert.AlertType.ERROR);
+        }catch (Exception e) {
+            alertMessage(Const._TIPS,Const._SYSTEM_ERR, Alert.AlertType.ERROR);
         }
+    }
 
-        if(packagePath == null || "".equals(packagePath)){
-            alertMessage("提示","包路径不能为空", Alert.AlertType.ERROR);
-            return;
-        }
+    private void createUtil() throws ParamsInvalidException,Exception{
+        String path = Assert.isNotNull(fieldProjectPath.getText(),"项目所在目录不能为空", ParamsInvalidException.class);
+        String daoPackagePath = Assert.isNotNull(daoPackageField.getText(),"Java工具类包路径不能为空", ParamsInvalidException.class);
+        String daoOutPath = Assert.isNotNull(daoOutFileField.getText(),"Java工具类包存放目录不能为空", ParamsInvalidException.class);
+        CreateJava createJava = new CreateJavaImpl();
+        createJava.createDao("MongoUtilDao",path + "/" + daoOutPath,daoPackagePath);
+    }
 
-        if(outFilePath == null || "".equals(outFilePath)){
-            alertMessage("提示","存放目录不能为空", Alert.AlertType.ERROR);
-            return;
-        }
+    private void createEntity() throws ParamsInvalidException,Exception{
 
+        String entityName = Assert.isNotNull(fieldEntityName.getText(),"Java实体类名不能为空", ParamsInvalidException.class);
+        String path = Assert.isNotNull(fieldProjectPath.getText(),"项目所在目录不能为空", ParamsInvalidException.class);
+        String packagePath = Assert.isNotNull( packageField.getText(),"包路径不能为空", ParamsInvalidException.class);
+        String outFilePath = Assert.isNotNull( outFileField.getText(),"包存放目录不能为空", ParamsInvalidException.class);
+        String tableName = Assert.isNotNull( fieldTableName.getText(),"Java实体类名称不能为空", ParamsInvalidException.class);
         //读取选择表中的字段信息
         List<ValNode> attrList = readSelectedTableFieldInfo(tableName);
         if(attrList == null){
@@ -159,8 +173,8 @@ public class MainController implements Initializable {
         }
         CreateJava createJava = new CreateJavaImpl();
         createJava.createEntity(entityName,attrList,path + "/" + outFilePath,packagePath);
-        alertMessage("提示","成功",Alert.AlertType.INFORMATION);
     }
+
 
     private List<ValNode> readSelectedTableFieldInfo(String tableName) {
 

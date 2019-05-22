@@ -1,0 +1,118 @@
+#parse("/utils.vm")
+package $!{bean.packageUrl};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+/**
+ *  此类为Mongo Generate Gui 工具自动生成
+ *  ps：默认spring-mongo-data依赖自动生成工具类,如果不适用于您的系统,请自行删除或适配
+ */
+public class $!{bean.name}<T> {
+
+    /**
+     * 依赖注入于spring配置文件中的bean
+     * ps：请自行手动配置MongoTemplate Bean 交由IOC容器管理
+     */
+    @Autowired
+    protected MongoTemplate mongoTemplate;
+
+    /**
+     * 连接名称 <库名称>
+     */
+    protected String collection;
+
+    /**
+     * 查询
+     */
+    public List<T> find(Query query) {
+        return mongoTemplate.find(query, this.getEntityClass());
+    }
+
+    public List<T> find(Query query, String collectionName) {
+        return mongoTemplate.find(query, this.getEntityClass(), collectionName);
+    }
+
+    /**
+     * 只查询一个满足条件的记录
+     */
+    public T findOne(Query query) {
+        return mongoTemplate.findOne(query, this.getEntityClass());
+    }
+
+    public T findOne(Query query, String collectionName) {
+        return mongoTemplate.findOne(query, this.getEntityClass(), collectionName);
+    }
+
+     /**
+       * 通过条件查询更新数据
+       */
+     public void update(Query query, Update update) {
+        mongoTemplate.findAndModify(query, update, this.getEntityClass());
+     }
+
+     public void update(Query query, Update update, String collectionName) {
+        mongoTemplate.findAndModify(query, update, this.getEntityClass(), collectionName);
+     }
+
+     /**
+       * 根据id删除对象
+       */
+     public void removeById(String id, String collectionName){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        ngoTemplate.remove(query, collectionName);
+     }
+
+     /**
+      * 保存一个对象到mongodb
+      */
+     public T save(T entity) {
+        mongoTemplate.insert(entity);
+        return entity;
+     }
+
+     public T save(T entity, String collectionName) {
+         mongoTemplate.insert(entity, collectionName);
+         return entity;
+     }
+
+     /**
+       * 通过ID获取记录
+       */
+     public T findById(String id) {
+        return mongoTemplate.findById(id, this.getEntityClass());
+     }
+
+     /**
+       * 通过ID获取记录,并且指定了集合名(表的意思)
+       */
+     public T findById(String id, String collectionName) {
+        return mongoTemplate.findById(id, this.getEntityClass(), collectionName);
+     }
+
+     /**
+      * 求数据总和
+      */
+     public long count(Query query){
+         return mongoTemplate.count(query, this.getEntityClass());
+     }
+
+     public long count(Query query, String collectionName){
+         return mongoTemplate.count(query, this.getEntityClass(), collectionName);
+     }
+
+     /**
+       * 获取需要操作的实体类class
+       */
+     private Class<T> getEntityClass(){
+          Type superclass = this.getClass().getGenericSuperclass();
+          Type[] actualTypeArguments = ((ParameterizedType)superclass).getActualTypeArguments();
+          return (Class) actualTypeArguments[0];
+     }
+}

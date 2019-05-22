@@ -3,10 +3,22 @@
 #parse("/utils.vm")
 ## 是否需要生成注解
 #set($needAnnotion=$!attrList.get(0).needAnnotation)
+#set($needDBObjectAnnotion=false)
 package $!{bean.packageUrl};
 #if($needAnnotion)
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+#end
+#foreach($node in $attrList)
+#if($node.fieldType == 'BasicDBList')
+import com.mongodb.BasicDBList;
+#end
+#if($node.fieldType == 'BasicDBObject')
+import com.mongodb.BasicDBObject;
+#end
+#if($node.fieldType == 'DBObject')
+import com.mongodb.DBObject;
+#end
 #end
 
 /**
