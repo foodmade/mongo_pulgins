@@ -24,7 +24,6 @@ public class HBoxCell extends ListCell<String> {
         button.setOpaqueInsets(new Insets(0));
         //设置按钮透明
         button.setBackground(new Background(new BackgroundFill(new Color(0,0,0,0),null,null)));
-        label.setWrapText(true);
 
         hbox.getChildren().addAll(button,label, pane);
         HBox.setHgrow(pane, Priority.ALWAYS);
