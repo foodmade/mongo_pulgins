@@ -1,4 +1,4 @@
-package com.generate.dao.abs;
+package com.abs;
 
 public class Node {
 

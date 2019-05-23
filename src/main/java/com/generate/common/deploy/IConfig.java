@@ -1,4 +1,4 @@
-package com.generate.dao;
+package com.generate.common.deploy;
 
 import com.generate.model.ConfigNode;
 
@@ -13,5 +13,5 @@ public interface IConfig {
      * 读取配置
      * @return
      */
-    ConfigNode readConfig();
+    ConfigNode readConfig() throws Exception;
 }

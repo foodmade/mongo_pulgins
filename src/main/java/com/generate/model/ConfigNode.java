@@ -1,6 +1,6 @@
 package com.generate.model;
 
-import com.generate.dao.abs.Node;
+import com.abs.Node;
 
 public class ConfigNode extends Node {
 

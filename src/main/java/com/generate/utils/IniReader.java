@@ -1,9 +1,11 @@
 package com.generate.utils;
 
 import com.generate.common.exception.CommonException;
-import com.generate.dao.abs.Node;
+import com.abs.Node;
+import javafx.scene.control.Alert;
 import org.ini4j.Ini;
 import org.ini4j.Profile;
+import org.ini4j.Wini;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,9 @@ public class IniReader {
 
     private static Logger logger = LoggerFactory.getLogger(IniReader.class);
 
-    private Ini ini;
+    private static String _DEFAULT_INIT_SECTION_NAME = "Base";
+
+    private Wini ini;
 
     /**
      * 构造函数
@@ -26,11 +30,12 @@ public class IniReader {
     public IniReader(String filename) throws Exception {
         Assert.isNotNull(filename,"ini构造器出现异常,配置文件路径不能为空",CommonException.class);
         try{
-            ini = new Ini(new File(filename));
+            ini = new Wini(new File(filename));
         }catch (Exception e){
             logger.error("【初始化ini配置文件出现异常 {}】",e.getMessage());
         }
     }
+
 
     /**
      * 读取配置文件
@@ -60,17 +65,15 @@ public class IniReader {
         storeIniConfig(key,nodeMap);
     }
 
-    private void storeIniConfig(String key, HashMap<String,Object> nodeMap) throws IOException {
+    private void storeIniConfig(String key, HashMap<String,Object> nodeMap) throws Exception {
 
-        Profile.Section section = ini.get(key);
-
+        Assert.isNotNull(ini,"ini加载器为空", CommonException.class);
         nodeMap.keySet().forEach(configKey -> {
             if(nodeMap.get(configKey) == null){
                 return;
             }
-            section.put(key,nodeMap.get(configKey));
+            ini.put(key,configKey,nodeMap.get(configKey));
         });
-
         ini.store();
     }
 

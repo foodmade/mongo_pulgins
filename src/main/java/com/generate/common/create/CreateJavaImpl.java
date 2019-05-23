@@ -1,6 +1,5 @@
-package com.generate.dao.impl;
+package com.generate.common.create;
 
-import com.generate.dao.ICreateJava;
 import com.generate.model.ValNode;
 import com.generate.utils.EngineConst;
 import com.generate.utils.EngineUtils;

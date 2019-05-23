@@ -1,7 +1,7 @@
 package com.generate.execute;
 
-import com.generate.dao.ICreateJava;
-import com.generate.dao.impl.CreateJavaImpl;
+import com.generate.common.create.ICreateJava;
+import com.generate.common.create.CreateJavaImpl;
 import com.generate.model.MongoOptions;
 import com.generate.mongo.MongoDBUtil;
 import com.mongodb.DB;

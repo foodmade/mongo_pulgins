@@ -1,13 +1,18 @@
 package com.controller;
 
 import com.custom.HBoxCell;
+import com.generate.common.comment.DialogComment;
+import com.generate.common.deploy.IConfig;
+import com.generate.common.deploy.KeepConfigControl;
 import com.generate.common.exception.ParamsInvalidException;
-import com.generate.dao.ICreateJava;
-import com.generate.dao.impl.CreateJavaImpl;
+import com.generate.common.create.ICreateJava;
+import com.abs.Node;
+import com.generate.common.create.CreateJavaImpl;
+import com.generate.model.ConfigNode;
 import com.generate.model.ValNode;
 import com.generate.mongo.MongoExcludeTable;
-import com.generate.source.DBCacheControl;
 import com.generate.utils.Assert;
+import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
 import com.generate.utils.Const;
 import com.gui.AutoSizeApplication;
@@ -82,16 +87,15 @@ public class MainController implements Initializable {
     @FXML
     public JFXButton clearMainConfigField;
 
-    public void initDataSourceInfo(String dataName) {
+    public void initDataSourceInfo(DB db) {
 
-        DB db = DBCacheControl.getCacheDB(dataName);
         if(db == null){
-            logger.warn("【从缓存获取到空的Mongo连接,请重启软件初始化】dataName: {}",dataName);
+            CommentUtilSource.alertMessage(Const._ERROR,"Mongo连接获取失败,请重启软件", Alert.AlertType.ERROR);
             return;
         }
         Set<String> collectionNameSet = db.getCollectionNames();
         if(collectionNameSet == null || collectionNameSet.isEmpty()){
-            logger.warn("【当前数据库：{},未获取到表存在】",dataName);
+            logger.warn("【当前数据库：{},未获取到表存在】",db.getName());
             return;
         }
         selectedDB = db;
@@ -152,11 +156,11 @@ public class MainController implements Initializable {
                 //开始生成Dao代码
                 createUtil();
             }
-            alertMessage(Const._TIPS,Const._SUCCESS,Alert.AlertType.INFORMATION);
+            CommentUtilSource.alertMessage(Const._TIPS,Const._SUCCESS,Alert.AlertType.INFORMATION);
         }catch (ParamsInvalidException e){
-            alertMessage(Const._TIPS,e.getErr_info(), Alert.AlertType.ERROR);
+            CommentUtilSource.alertMessage(Const._TIPS,e.getErr_info(), Alert.AlertType.ERROR);
         }catch (Exception e) {
-            alertMessage(Const._TIPS,Const._SYSTEM_ERR, Alert.AlertType.ERROR);
+            CommentUtilSource.alertMessage(Const._TIPS,Const._SYSTEM_ERR, Alert.AlertType.ERROR);
         }
     }
 
@@ -188,7 +192,7 @@ public class MainController implements Initializable {
     private List<ValNode> readSelectedTableFieldInfo(String tableName) {
 
         if(selectedDB == null){
-            alertMessage("提示","Mongo连接为空,请重新打开软件初始化", Alert.AlertType.ERROR);
+            CommentUtilSource.alertMessage("提示","Mongo连接为空,请重新打开软件初始化", Alert.AlertType.ERROR);
             return null;
         }
         DBCollection collection = selectedDB.getCollection(tableName);
@@ -197,11 +201,11 @@ public class MainController implements Initializable {
         try {
             modelDBObject = collection.findOne();
         } catch (Exception e) {
-            alertMessage("提示", "尝试读取表信息失败,请重试" ,Alert.AlertType.WARNING);
+            CommentUtilSource.alertMessage("提示", "尝试读取表信息失败,请重试" ,Alert.AlertType.WARNING);
             return null;
         }
         if(modelDBObject == null){
-            alertMessage("提示","获取到的表中无数据,无法读取字段名称,请自行初始化数据库数据", Alert.AlertType.WARNING);
+            CommentUtilSource.alertMessage("提示","获取到的表中无数据,无法读取字段名称,请自行初始化数据库数据", Alert.AlertType.WARNING);
             return null;
         }
         List<ValNode> nodeList = new ArrayList<>();
@@ -219,12 +223,6 @@ public class MainController implements Initializable {
         return nodeList;
     }
 
-    public static void alertMessage(String title, String message, Alert.AlertType alertType){
-        Alert information = new Alert(alertType,message);
-        information.setTitle(title);
-        information.showAndWait();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCommentCss();
@@ -239,6 +237,34 @@ public class MainController implements Initializable {
      */
     public void saveConfig(ActionEvent actionEvent) {
 
+        String configName = DialogComment.inputMessageDialog(Const._TIPS,"请输入配置名称","ConfigName");
+        if(CommonUtils.isEmpty(configName)){
+            return;
+        }
+        try {
+            //获取当前输入参数
+            Node node = fetchConfig();
+            //写入配置文件
+            IConfig config = new KeepConfigControl().setConfig(configName,node);
+            config.addConfig();
+        } catch (Exception e) {
+            CommentUtilSource.alertMessage(Const._ERROR,"保存配置失败", Alert.AlertType.ERROR);
+            return;
+        }
+        CommentUtilSource.alertMessage(Const._SUCCESS,"保存配置成功", Alert.AlertType.INFORMATION);
+    }
+
+    private Node fetchConfig() {
+        ConfigNode node = new ConfigNode();
+        node.setDaoOutFilePath(daoOutFileField.getText());
+        node.setDaoPackagePath(daoPackageField.getText());
+        node.setFieldProjectPath(fieldProjectPath.getText());
+        node.setNeedAnnotation(needAnnotationField.isSelected());
+        node.setNeedDbRef(dbRefField.isSelected());
+        node.setNeedIClass(idClassField.isSelected());
+        node.setOutFilePath(outFileField.getText());
+        node.setPackagePath(packageField.getText());
+        return node;
     }
 
     /**

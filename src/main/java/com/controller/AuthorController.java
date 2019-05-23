@@ -1,14 +1,14 @@
 package com.controller;
 
+import com.control.DialogControl;
+import com.generate.common.comment.DialogComment;
 import com.generate.common.exception.ParamsInvalidException;
 import com.generate.listener.MsgListener;
 import com.generate.model.MongoOptions;
 import com.generate.model.MsgNode;
 import com.generate.mongo.DataSourceLinkerFetch;
-import com.generate.source.DBCacheControl;
 import com.generate.utils.CommonUtils;
 import com.gui.AutoSizeApplication;
-import com.gui.ConfigGui;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
 import com.mongodb.DB;
@@ -17,9 +17,12 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -60,9 +63,9 @@ public class AuthorController implements Initializable {
             return;
         }
         //缓存至内存
-        DBCacheControl.putDB(dataNameField.getText(),db);
+//        DBCacheControl.putDB(dataNameField.getText(),db);
         AutoSizeApplication.hideWindow();
-        MainGui.openWindow(null,dataNameField.getText());
+        MainGui.openWindow(null,db);
     }
 
     /**
@@ -108,6 +111,13 @@ public class AuthorController implements Initializable {
 
     public void clearInput(){
         clearAllFieldText();
+
+        DialogControl dialogControl = new DialogControl();
+
+        Pane box = new Pane();
+        box.getChildren().add(dialogControl);
+
+
     }
 
     private void clearAllFieldText() {

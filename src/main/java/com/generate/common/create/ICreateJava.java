@@ -1,4 +1,4 @@
-package com.generate.dao;
+package com.generate.common.create;
 
 import com.generate.model.ValNode;
 

@@ -39,4 +39,8 @@ public class ConfigGui extends Application {
             Platform.runLater(()-> ConfigGui.primaryStage.show());
         }
     }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 }
