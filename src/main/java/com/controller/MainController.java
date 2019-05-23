@@ -2,7 +2,7 @@ package com.controller;
 
 import com.custom.HBoxCell;
 import com.generate.common.exception.ParamsInvalidException;
-import com.generate.dao.CreateJava;
+import com.generate.dao.ICreateJava;
 import com.generate.dao.impl.CreateJavaImpl;
 import com.generate.model.ValNode;
 import com.generate.mongo.MongoExcludeTable;
@@ -13,7 +13,6 @@ import com.generate.utils.Const;
 import com.gui.AutoSizeApplication;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -76,6 +75,12 @@ public class MainController implements Initializable {
     public TextField daoOutFileField;
     @FXML
     public CheckBox daoCheckField;
+    @FXML
+    public ImageView configView;
+    @FXML
+    public JFXButton saveConfigField;
+    @FXML
+    public JFXButton clearMainConfigField;
 
     public void initDataSourceInfo(String dataName) {
 
@@ -131,8 +136,12 @@ public class MainController implements Initializable {
             fieldProjectPath.setText(directory.getPath());
     }
 
-    public void clickImage(MouseEvent mouseEvent) {
+    public void clickDataSourceConfigImage(MouseEvent mouseEvent) {
         AutoSizeApplication.showWindow();
+    }
+
+    public void clickConfigImage(MouseEvent mouseEvent) {
+
     }
 
     public void generateJava(ActionEvent actionEvent) {
@@ -155,8 +164,8 @@ public class MainController implements Initializable {
         String path = Assert.isNotNull(fieldProjectPath.getText(),"项目所在目录不能为空", ParamsInvalidException.class);
         String daoPackagePath = Assert.isNotNull(daoPackageField.getText(),"Java工具类包路径不能为空", ParamsInvalidException.class);
         String daoOutPath = Assert.isNotNull(daoOutFileField.getText(),"Java工具类包存放目录不能为空", ParamsInvalidException.class);
-        CreateJava createJava = new CreateJavaImpl();
-        createJava.createDao("MongoUtilDao",path + "/" + daoOutPath,daoPackagePath);
+        ICreateJava ICreateJava = new CreateJavaImpl();
+        ICreateJava.createDao("MongoUtilDao",path + "/" + daoOutPath,daoPackagePath);
     }
 
     private void createEntity() throws ParamsInvalidException,Exception{
@@ -171,8 +180,8 @@ public class MainController implements Initializable {
         if(attrList == null){
             return;
         }
-        CreateJava createJava = new CreateJavaImpl();
-        createJava.createEntity(entityName,attrList,path + "/" + outFilePath,packagePath);
+        ICreateJava ICreateJava = new CreateJavaImpl();
+        ICreateJava.createEntity(entityName,attrList,path + "/" + outFilePath,packagePath);
     }
 
 
@@ -223,5 +232,22 @@ public class MainController implements Initializable {
 
     private void initCommentCss() {
         folderField.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.FOLDER));
+    }
+
+    /**
+     * 保存配置
+     */
+    public void saveConfig(ActionEvent actionEvent) {
+
+    }
+
+    /**
+     * 清空输入参数
+     */
+    public void clearConfig(ActionEvent actionEvent) {
+        fieldEntityName.clear();
+        fieldProjectPath.clear();
+        packageField.clear();
+        daoPackageField.clear();
     }
 }

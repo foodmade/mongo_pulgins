@@ -298,18 +298,12 @@ public class FileUtils {
     /**
      * 新建一个文件并写入内容
      *
-     * @param String
-     *            path 文件全路径
-     * @param String
-     *            fileName 文件名
-     * @param String
-     *            content 内容
-     * @param int
-     *            bufLen 设置缓冲区大小
-     * @param boolean
-     *            isWrite 是否追加写入文件
+     * @param  path 文件全路径
+     * @param  fileName 文件名
+     * @param  content 内容
+     * @param bufLen 设置缓冲区大小
+     * @param isWrite 是否追加写入文件
      * @return boolean
-     * @throws IOException
      */
     public static boolean newFile(String path, String fileName, String content,
                                   int bufLen, boolean isWrite) throws IOException {

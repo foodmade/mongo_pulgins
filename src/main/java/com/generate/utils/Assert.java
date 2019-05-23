@@ -6,8 +6,8 @@ public class Assert {
 
     /**
      * 判断对象是否为空,是则抛出异常
-     * @param o       待判断对象
-     * @param message 判定失败提示的Message
+     * @param o           待判断对象
+     * @param message     判定失败提示的Message
      * @param exCls       抛出的异常种类
      */
     public static <T> T isNotNull(T o,String message,Class<? extends RuntimeException> exCls) throws Exception {

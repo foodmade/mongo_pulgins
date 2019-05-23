@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="865.0" stylesheets="@../static/css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="760.0" stylesheets="@../static/css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
    <children>
       <Separator layoutY="61.0" prefHeight="3.0" prefWidth="865.0" />
       <Label layoutX="218.0" layoutY="67.0" prefHeight="20.0" prefWidth="37.0" text="表名：" />
@@ -23,7 +23,7 @@
       <Label layoutX="413.0" layoutY="174.0" prefHeight="20.0" prefWidth="64.0" text="存放目录：" />
       <TextField fx:id="outFileField" layoutX="473.0" layoutY="172.0" prefHeight="23.0" prefWidth="132.0" text="src/main/java" />
       <JFXListView fx:id="tableListView" layoutY="64.0" prefHeight="485.0" prefWidth="155.0" />
-      <ImageView fx:id="sourceConfigView" fitHeight="29.0" fitWidth="30.0" layoutX="17.0" layoutY="6.0" onMouseClicked="#clickImage" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="sourceConfigView" fitHeight="29.0" fitWidth="30.0" layoutX="17.0" layoutY="6.0" onMouseClicked="#clickDataSourceConfigImage" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/配置数据源.png" />
          </image>
@@ -31,9 +31,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label layoutX="3.0" layoutY="39.0" text="数据库配置" />
+      <Label layoutX="3.0" layoutY="39.0" text="数据库连接" />
       <JFXButton fx:id="generateField" layoutX="177.0" layoutY="491.0" onAction="#generateJava" prefHeight="23.0" prefWidth="64.0" text="一键生成" />
-      <Separator layoutX="155.0" layoutY="264.0" prefHeight="3.0" prefWidth="707.0" />
+      <Separator layoutX="155.0" layoutY="264.0" prefHeight="3.0" prefWidth="581.0" />
       <Label layoutX="170.0" layoutY="209.0" prefHeight="20.0" prefWidth="90.0" text="Java工具类名：" />
       <TextField fx:id="daoPackageField" layoutX="261.0" layoutY="207.0" prefHeight="23.0" prefWidth="146.0" promptText="com.example.dao" />
       <TextField fx:id="daoOutFileField" layoutX="474.0" layoutY="207.0" prefHeight="23.0" prefWidth="132.0" text="src/main/java" />
@@ -42,5 +42,16 @@
       <CheckBox fx:id="dbRefField" layoutX="274.0" layoutY="289.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="生成DBRef" />
       <CheckBox fx:id="idClassField" layoutX="378.0" layoutY="289.0" mnemonicParsing="false" text="跳过 _id和_class" />
       <CheckBox fx:id="daoCheckField" layoutX="613.0" layoutY="211.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="7.0" />
+      <ImageView fx:id="configView" fitHeight="29.0" fitWidth="30.0" layoutX="78.0" layoutY="6.0" onMouseClicked="#clickConfigImage" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <image>
+            <Image url="@../img/配置.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="82.0" layoutY="39.0" text="配置" />
+      <JFXButton fx:id="saveConfigField" layoutX="294.0" layoutY="491.0" onAction="#saveConfig" prefHeight="23.0" prefWidth="64.0" text="保存配置" />
+      <JFXButton fx:id="clearMainConfigField" layoutX="409.0" layoutY="491.0" onAction="#clearConfig" prefHeight="23.0" prefWidth="64.0" text="重置参数" />
    </children>
 </AnchorPane>

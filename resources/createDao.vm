@@ -66,7 +66,7 @@ public class $!{bean.name}<T> {
      public void removeById(String id, String collectionName){
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(id));
-        ngoTemplate.remove(query, collectionName);
+        mongoTemplate.remove(query, collectionName);
      }
 
      /**

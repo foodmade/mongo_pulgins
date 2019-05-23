@@ -1,10 +1,9 @@
 package com.generate.execute;
 
-import com.generate.dao.CreateJava;
+import com.generate.dao.ICreateJava;
 import com.generate.dao.impl.CreateJavaImpl;
 import com.generate.model.MongoOptions;
 import com.generate.mongo.MongoDBUtil;
-import com.generate.utils.EngineConst;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -15,7 +14,7 @@ import java.util.Set;
 public class TestModule {
 
     public static void main(String[] args) {
-        CreateJava createJava = new CreateJavaImpl();
+        ICreateJava ICreateJava = new CreateJavaImpl();
 
         MongoOptions options = new MongoOptions();
         options.setDataName("movie");
@@ -37,7 +36,7 @@ public class TestModule {
             System.out.println("type:  " + dbObejct.get(key).getClass().getName());
         });
 
-//        createJava.createEntity("Test",attrList, EngineConst._PACKAGE_DEFAULT_PATH ,EngineConst._PACKAGE_FILE_OUT_PATH);
+//        ICreateJava.createEntity("Test",attrList, EngineConst._PACKAGE_DEFAULT_PATH ,EngineConst._PACKAGE_FILE_OUT_PATH);
     }
 
 }

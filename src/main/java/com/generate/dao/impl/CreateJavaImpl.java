@@ -1,6 +1,6 @@
 package com.generate.dao.impl;
 
-import com.generate.dao.CreateJava;
+import com.generate.dao.ICreateJava;
 import com.generate.model.ValNode;
 import com.generate.utils.EngineConst;
 import com.generate.utils.EngineUtils;
@@ -14,7 +14,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 
-public class CreateJavaImpl implements CreateJava {
+public class CreateJavaImpl implements ICreateJava {
 
     @Override
     public void createEntity(String fileName, List<ValNode> fieldList,String packageUrl,String outPath) {
@@ -46,8 +46,7 @@ public class CreateJavaImpl implements CreateJava {
         EngineUtils.loadVelocityContext(velocityContext,fieldList);
         //写入字符串流
         StringWriter stringWriter = new StringWriter();
-        String contextPath = packageUrl + "/"+ outPath.replaceAll("\\.","/");
-
+        String contextPath = buildFilePath(packageUrl, outPath);
         //使用模板加载
         template.merge(velocityContext, stringWriter);
         try {
@@ -55,6 +54,10 @@ public class CreateJavaImpl implements CreateJava {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String buildFilePath(String packageUrl,String outPath){
+        return packageUrl + "/"+ outPath.replaceAll("\\.","/");
     }
 
     @Override

@@ -17,7 +17,7 @@ public class AutoSizeApplication extends Application {
         AnchorPane pane = FXMLLoader.load(Objects.requireNonNull(AutoSizeApplication.class.getClassLoader().getResource("fxml/Container.fxml")));
         Scene scene = new Scene(pane);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Config out ");
+        primaryStage.setTitle("Config");
         AutoSizeApplication.primaryStage = primaryStage;
         primaryStage.show();
     }
