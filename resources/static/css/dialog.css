@@ -1,0 +1,36 @@
+*{
+    -fx-font-family: Microsoft YaHei; /* 设置字体 */
+}
+
+#sureButton {
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 12px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #5599FF;
+    -fx-pref-width: 90;
+    -fx-pref-height: 8;
+    -fx-text-fill: BLACK;
+}
+
+#quitButton{
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 12px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #E5E5E5;
+    -fx-pref-width: 90;
+    -fx-pref-height: 8;
+    -fx-text-fill: BLACK;
+}
+
+#sureButton:hover {
+    -fx-background-color: #5599FF;
+}
+
+#quitButton:hover {
+    -fx-background-color: #79bcff;
+}
+
+#outField {
+    -fx--webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    -fx-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}

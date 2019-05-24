@@ -1,3 +1,7 @@
+*{
+    -fx-font-family: "Microsoft YaHei UI";
+}
+
 #sourceConfigView{
     -fx-cursor: pointer;
 }
@@ -61,5 +65,8 @@
 }
 
 #tableListView{
-    -fx-background-color:WHITE;
+    -fx-background-color: rgba(44, 64, 145, 0.32);
+    -fx-border-color: rgba(159, 118, 18, 0.3);
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
 }

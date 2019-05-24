@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
+<?import java.net.*?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.collections.FXCollections?>
 
-<AnchorPane prefHeight="339.0" prefWidth="583.0" stylesheets="@../static/css/config.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.AuthorController">
+<AnchorPane prefHeight="336.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.AuthorController">
    <children>
-       <Label layoutX="14.0" layoutY="22.0" text="主   机：" />
-       <Label layoutX="10.0" layoutY="115.0" text="用户名：" />
-       <Label layoutX="11.0" layoutY="162.0" text="密   码：" />
-      <Label layoutX="14.0" layoutY="68.0" text="端   口：" />
-      <Label layoutX="11.0" layoutY="206.0" text="数据库：" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="23.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="70.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="114.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
-      <Label layoutX="11.0" layoutY="249.0" text="version：" />
-      <JFXButton fx:id="testButton" layoutX="15.0" layoutY="288.0" onAction="#linkTest" prefHeight="32.0" prefWidth="71.0" text="连接测试" />
-      <JFXButton fx:id="clearButton" layoutX="250.0" layoutY="288.0" onAction="#clearInput" prefHeight="32.0" prefWidth="71.0" text="重置" />
-      <JFXButton fx:id="submit" layoutX="133.0" layoutY="288.0" onAction="#submitConfig" prefHeight="32.0" prefWidth="71.0" text="保存" />
+       <Label layoutX="34.0" layoutY="22.0" styleClass="text-info" text="主   机：" />
+       <Label layoutX="30.0" layoutY="115.0" styleClass="text-info" text="用户名：" />
+       <Label layoutX="31.0" layoutY="162.0" styleClass="text-info" text="密   码：" />
+      <Label layoutX="34.0" layoutY="68.0" styleClass="text-info" text="端   口：" />
+      <Label layoutX="31.0" layoutY="206.0" styleClass="text-info" text="数据库：" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="79.0" layoutY="25.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="78.0" layoutY="71.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="77.0" layoutY="118.0" prefHeight="0.0" prefWidth="15.0" text="*" textFill="#ff0404" textOverrun="CENTER_WORD_ELLIPSIS" />
+      <Label layoutX="42.0" layoutY="249.0" prefHeight="15.0" prefWidth="40.0" styleClass="text-info" text="版本：" />
+      <JFXButton fx:id="testButton" layoutX="15.0" layoutY="288.0" onAction="#linkTest" prefHeight="32.0" prefWidth="90.0" styleClass="btn,btn-sm,btn-warning" text="连接测试" />
+      <JFXButton fx:id="clearButton" layoutX="249.0" layoutY="287.0" onAction="#clearInput" prefHeight="32.0" prefWidth="71.0" styleClass="btn,btn-sm,btn-default" text="重置" />
+      <JFXButton fx:id="submit" layoutX="137.0" layoutY="288.0" onAction="#submitConfig" prefHeight="32.0" prefWidth="71.0" styleClass="btn,btn-sm,btn-success" text="保存" />
       <TextField fx:id="hostField" layoutX="95.0" layoutY="15.0" prefHeight="28.0" prefWidth="210.0" promptText="请输入主机" text="106.75.233.202" />
       <TextField fx:id="portField" layoutX="95.0" layoutY="60.0" prefHeight="32.0" prefWidth="210.0" promptText="27017" text="27017" />
       <TextField fx:id="userField" layoutX="95.0" layoutY="105.0" prefHeight="32.0" prefWidth="210.0" promptText="movies" text="movies" />
       <PasswordField fx:id="pwdField" layoutX="95.0" layoutY="150.0" prefHeight="32.0" prefWidth="210.0" text="chen19960119" />
       <TextField fx:id="dataNameField" layoutX="95.0" layoutY="195.0" prefHeight="32.0" prefWidth="210.0" promptText="movie" text="movie" />
-      <Separator layoutX="338.0" layoutY="4.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="6.0" />
-      <TextArea fx:id="logTextArea" editable="false" layoutX="342.0" layoutY="2.0" prefHeight="335.0" prefWidth="238.0" wrapText="true" />
+      <TextArea fx:id="logTextArea" editable="false" layoutX="342.0" layoutY="2.0" prefHeight="333.0" prefWidth="238.0" wrapText="true" />
       <ComboBox fx:id="versionField" layoutX="95.0" layoutY="242.0" prefWidth="150.0" />
    </children>
+   <stylesheets>
+      <URL value="@../static/css/config.css" />
+      <URL value="@../static/css/bootstrapfx.css" />
+   </stylesheets>
 </AnchorPane>

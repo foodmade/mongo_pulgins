@@ -1,7 +1,7 @@
 package com.controller;
 
+import com.custom.dialog.ConfigSureDialogStage;
 import com.custom.HBoxCell;
-import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
 import com.generate.common.exception.ParamsInvalidException;
@@ -15,7 +15,7 @@ import com.generate.utils.Assert;
 import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
 import com.generate.utils.Const;
-import com.gui.AutoSizeApplication;
+import com.gui.ConfigGui;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
 import com.mongodb.DB;
@@ -37,11 +37,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
@@ -86,6 +84,8 @@ public class MainController implements Initializable {
     public JFXButton saveConfigField;
     @FXML
     public JFXButton clearMainConfigField;
+
+    TableColumn column;
 
     public void initDataSourceInfo(DB db) {
 
@@ -141,7 +141,7 @@ public class MainController implements Initializable {
     }
 
     public void clickDataSourceConfigImage(MouseEvent mouseEvent) {
-        AutoSizeApplication.showWindow();
+        ConfigGui.showWindow();
     }
 
     public void clickConfigImage(MouseEvent mouseEvent) {
@@ -226,6 +226,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCommentCss();
+
     }
 
     private void initCommentCss() {
@@ -236,12 +237,11 @@ public class MainController implements Initializable {
      * 保存配置
      */
     public void saveConfig(ActionEvent actionEvent) {
-
-        String configName = DialogComment.inputMessageDialog(Const._TIPS,"请输入配置名称","ConfigName");
-        if(CommonUtils.isEmpty(configName)){
-            return;
-        }
         try {
+            String configName = openConfigNameDialog();
+            if(CommonUtils.isEmpty(configName)){
+                return;
+            }
             //获取当前输入参数
             Node node = fetchConfig();
             //写入配置文件
@@ -270,10 +270,21 @@ public class MainController implements Initializable {
     /**
      * 清空输入参数
      */
-    public void clearConfig(ActionEvent actionEvent) {
+    public void clearConfig(ActionEvent actionEvent) throws IOException {
         fieldEntityName.clear();
         fieldProjectPath.clear();
         packageField.clear();
         daoPackageField.clear();
+    }
+
+    /**
+     * 打开配置名称dialog
+     * @return 配置名称
+     */
+    private String openConfigNameDialog() throws IOException {
+        ConfigSureDialogStage configSureDialogStage = new ConfigSureDialogStage();
+        DialogController controller = configSureDialogStage.getController();
+        configSureDialogStage.showAndWait();
+        return controller.getConfigName();
     }
 }

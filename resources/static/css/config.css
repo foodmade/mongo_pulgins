@@ -1,15 +1,15 @@
-*{
-    -fx-font-family:"FontAwesome";
-    -fx-font-size: 12px;
-}
+/**{*/
+    /*-fx-font-family:Microsoft YaHei;*/
+    /*-fx-font-size: 12px;*/
+/*}*/
 
-.button{
+/*.button{
     -fx-background-color: #E5E5E5;
 }
 
 .button:hover{
     -fx-background-color: rgba(130, 191, 158, 0.59);
-}
+}*/
 
 .combo-box{
     -fx-pref-height: 28;
@@ -22,6 +22,10 @@
 #logTextArea{
     -fx-text-fill: #000dff;
     -fx-font-size: 12;
+}
+
+.label {
+
 }
 
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.scene.*?>
 <?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="760.0" stylesheets="@../static/css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: #ddd;" styleClass="panel-info" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
    <children>
       <Separator layoutY="61.0" prefHeight="3.0" prefWidth="865.0" />
       <Label layoutX="218.0" layoutY="67.0" prefHeight="20.0" prefWidth="37.0" text="表名：" />
@@ -54,4 +55,8 @@
       <JFXButton fx:id="saveConfigField" layoutX="294.0" layoutY="491.0" onAction="#saveConfig" prefHeight="23.0" prefWidth="64.0" text="保存配置" />
       <JFXButton fx:id="clearMainConfigField" layoutX="409.0" layoutY="491.0" onAction="#clearConfig" prefHeight="23.0" prefWidth="64.0" text="重置参数" />
    </children>
+   <stylesheets>
+      <URL value="@../static/css/main.css" />
+      <URL value="@../static/css/bootstrapfx.css" />
+   </stylesheets>
 </AnchorPane>
