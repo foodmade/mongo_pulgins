@@ -1,5 +1,9 @@
 *{
-    -fx-font-family: "Microsoft YaHei UI";
+    -fx-font-family: Microsoft YaHei UI;
+}
+
+#rootPane{
+    -fx-background-color: #ddd;
 }
 
 #sourceConfigView{
@@ -9,7 +13,7 @@
 #generateField{
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 12px;
-    -jfx-button-type: RAISED;
+    /*-jfx-button-type: RAISED;*/
     -fx-background-color: rgb(85, 162, 85);
     -fx-pref-width: 90;
     -fx-pref-height: 8;
@@ -19,7 +23,7 @@
 #saveConfigField{
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 12px;
-    -jfx-button-type: RAISED;
+    /*-jfx-button-type: RAISED;*/
     -fx-background-color: #E5E5E5;
     -fx-pref-width: 90;
     -fx-pref-height: 8;
@@ -29,7 +33,7 @@
 #clearMainConfigField{
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 12px;
-    -jfx-button-type: RAISED;
+    /*-jfx-button-type: RAISED;*/
     -fx-background-color: #E5E5E5;
     -fx-pref-width: 90;
     -fx-pref-height: 8;

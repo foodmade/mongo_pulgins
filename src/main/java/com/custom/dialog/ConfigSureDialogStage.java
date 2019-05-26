@@ -1,11 +1,12 @@
 package com.custom.dialog;
 
-import com.controller.DialogController;
+import com.controller.ConfigSureDialogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -17,15 +18,16 @@ public class ConfigSureDialogStage {
 
     private Stage stage;
 
-    private DialogController controller;
+    private ConfigSureDialogController controller;
 
     public ConfigSureDialogStage() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(ConfigSureDialogStage.class.getClassLoader().getResource("fxml/ConfigSureDialog.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(ConfigSureDialogStage.class.getClassLoader().getResource("fxml/dialog/ConfigSureDialog.fxml")));
         Parent parent = fxmlLoader.load();
         this.controller = fxmlLoader.getController();
         Scene scene = new Scene(parent);
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
     }
 
@@ -33,7 +35,7 @@ public class ConfigSureDialogStage {
         stage.showAndWait();
     }
 
-    public DialogController getController() {
+    public ConfigSureDialogController getController() {
         return controller;
     }
 }

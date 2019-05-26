@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="249.0" stylesheets="@../../static/css/dialog.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.ConfigSureDialogController">
+   <children>
+      <TextField fx:id="outField" layoutX="28.0" layoutY="37.0" prefHeight="30.0" prefWidth="201.0" promptText="请输入配置名称" />
+      <JFXButton fx:id="sureButton" layoutX="28.0" layoutY="79.0" onAction="#sureConfig" prefHeight="13.0" prefWidth="74.0" text="确认" />
+      <JFXButton fx:id="quitButton" layoutX="139.0" layoutY="79.0" onAction="#exitDialog" prefHeight="23.0" prefWidth="55.0" text="取消" />
+   </children>
+</Pane>

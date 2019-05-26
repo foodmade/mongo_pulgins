@@ -283,7 +283,7 @@ public class MainController implements Initializable {
      */
     private String openConfigNameDialog() throws IOException {
         ConfigSureDialogStage configSureDialogStage = new ConfigSureDialogStage();
-        DialogController controller = configSureDialogStage.getController();
+        ConfigSureDialogController controller = configSureDialogStage.getController();
         configSureDialogStage.showAndWait();
         return controller.getConfigName();
     }

@@ -8,21 +8,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: #ddd;" styleClass="panel-info" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="760.0" style="-fx-background-color: #ddd;" stylesheets="@../static/css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.MainController">
    <children>
       <Separator layoutY="61.0" prefHeight="3.0" prefWidth="865.0" />
-      <Label layoutX="218.0" layoutY="67.0" prefHeight="20.0" prefWidth="37.0" text="表名：" />
-      <TextField fx:id="fieldTableName" disable="true" editable="false" layoutX="261.0" layoutY="66.0" prefHeight="23.0" prefWidth="360.0" promptText="User" />
-      <TextField fx:id="fieldEntityName" layoutX="261.0" layoutY="101.0" prefHeight="23.0" prefWidth="360.0" promptText="Account" />
-      <Label layoutX="170.0" layoutY="102.0" prefHeight="20.0" prefWidth="91.0" text="Java实体类名：" />
-      <Label layoutX="170.0" layoutY="139.0" prefHeight="20.0" prefWidth="91.0" text="项目所在目录：" />
+      <Label layoutX="218.0" layoutY="72.0" prefHeight="20.0" prefWidth="37.0" text="表名：" />
+      <TextField fx:id="fieldTableName" disable="true" editable="false" layoutX="261.0" layoutY="71.0" prefHeight="23.0" prefWidth="360.0" promptText="User" />
+      <TextField fx:id="fieldEntityName" layoutX="261.0" layoutY="106.0" prefHeight="23.0" prefWidth="360.0" promptText="Account" />
+      <Label layoutX="170.0" layoutY="107.0" prefHeight="20.0" prefWidth="91.0" text="Java实体类名：" />
+      <Label layoutX="170.0" layoutY="144.0" prefHeight="20.0" prefWidth="91.0" text="项目所在目录：" />
       <ImageView fitHeight="37.0" fitWidth="40.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="fieldProjectPath" layoutX="261.0" layoutY="137.0" prefHeight="23.0" prefWidth="304.0" promptText="D:\workspace\example" />
-      <JFXButton fx:id="folderField" layoutX="574.0" layoutY="138.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="23.0" prefWidth="37.0" />
-      <Label layoutX="182.0" layoutY="174.0" prefHeight="20.0" prefWidth="80.0" text="Java类包名：" />
-      <TextField fx:id="packageField" layoutX="261.0" layoutY="172.0" prefHeight="23.0" prefWidth="146.0" promptText="com.example.entity" />
+      <TextField fx:id="fieldProjectPath" layoutX="261.0" layoutY="142.0" prefHeight="23.0" prefWidth="304.0" promptText="D:\workspace\example" />
+      <JFXButton fx:id="folderField" layoutX="574.0" layoutY="143.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="23.0" prefWidth="37.0" />
+      <Label layoutX="182.0" layoutY="179.0" prefHeight="20.0" prefWidth="80.0" text="Java类包名：" />
+      <TextField fx:id="packageField" layoutX="261.0" layoutY="177.0" prefHeight="23.0" prefWidth="146.0" promptText="com.example.entity" />
       <Label layoutX="413.0" layoutY="174.0" prefHeight="20.0" prefWidth="64.0" text="存放目录：" />
-      <TextField fx:id="outFileField" layoutX="473.0" layoutY="172.0" prefHeight="23.0" prefWidth="132.0" text="src/main/java" />
+      <TextField fx:id="outFileField" layoutX="473.0" layoutY="177.0" prefHeight="23.0" prefWidth="132.0" text="src/main/java" />
       <JFXListView fx:id="tableListView" layoutY="64.0" prefHeight="485.0" prefWidth="155.0" />
       <ImageView fx:id="sourceConfigView" fitHeight="29.0" fitWidth="30.0" layoutX="17.0" layoutY="6.0" onMouseClicked="#clickDataSourceConfigImage" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -35,14 +35,14 @@
       <Label layoutX="3.0" layoutY="39.0" text="数据库连接" />
       <JFXButton fx:id="generateField" layoutX="177.0" layoutY="491.0" onAction="#generateJava" prefHeight="23.0" prefWidth="64.0" text="一键生成" />
       <Separator layoutX="155.0" layoutY="264.0" prefHeight="3.0" prefWidth="581.0" />
-      <Label layoutX="170.0" layoutY="209.0" prefHeight="20.0" prefWidth="90.0" text="Java工具类名：" />
-      <TextField fx:id="daoPackageField" layoutX="261.0" layoutY="207.0" prefHeight="23.0" prefWidth="146.0" promptText="com.example.dao" />
-      <TextField fx:id="daoOutFileField" layoutX="474.0" layoutY="207.0" prefHeight="23.0" prefWidth="132.0" text="src/main/java" />
-      <Label layoutX="414.0" layoutY="209.0" prefHeight="20.0" prefWidth="64.0" text="存放目录：" />
+      <Label layoutX="170.0" layoutY="214.0" prefHeight="20.0" prefWidth="90.0" text="Java工具类名：" />
+      <TextField fx:id="daoPackageField" layoutX="261.0" layoutY="212.0" prefHeight="23.0" prefWidth="146.0" promptText="com.example.dao" />
+      <TextField fx:id="daoOutFileField" layoutX="474.0" layoutY="212.0" prefHeight="23.0" prefWidth="132.0" text="src/main/java" />
+      <Label layoutX="414.0" layoutY="214.0" prefHeight="20.0" prefWidth="64.0" text="存放目录：" />
       <CheckBox fx:id="needAnnotationField" layoutX="167.0" layoutY="289.0" mnemonicParsing="false" selected="true" text="mongo注解" />
       <CheckBox fx:id="dbRefField" layoutX="274.0" layoutY="289.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="90.0" text="生成DBRef" />
       <CheckBox fx:id="idClassField" layoutX="378.0" layoutY="289.0" mnemonicParsing="false" text="跳过 _id和_class" />
-      <CheckBox fx:id="daoCheckField" layoutX="613.0" layoutY="211.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="7.0" />
+      <CheckBox fx:id="daoCheckField" layoutX="613.0" layoutY="216.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="7.0" />
       <ImageView fx:id="configView" fitHeight="29.0" fitWidth="30.0" layoutX="78.0" layoutY="6.0" onMouseClicked="#clickConfigImage" pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -55,8 +55,4 @@
       <JFXButton fx:id="saveConfigField" layoutX="294.0" layoutY="491.0" onAction="#saveConfig" prefHeight="23.0" prefWidth="64.0" text="保存配置" />
       <JFXButton fx:id="clearMainConfigField" layoutX="409.0" layoutY="491.0" onAction="#clearConfig" prefHeight="23.0" prefWidth="64.0" text="重置参数" />
    </children>
-   <stylesheets>
-      <URL value="@../static/css/main.css" />
-      <URL value="@../static/css/bootstrapfx.css" />
-   </stylesheets>
 </AnchorPane>
