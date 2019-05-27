@@ -1,16 +1,16 @@
 package com.controller;
 
 import com.custom.dialog.ConfigSureDialogStage;
-import com.custom.HBoxCell;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
+import com.generate.common.deploy.MongoConfigControl;
 import com.generate.common.exception.ParamsInvalidException;
 import com.generate.common.create.ICreateJava;
 import com.abs.Node;
 import com.generate.common.create.CreateJavaImpl;
 import com.generate.model.ConfigNode;
+import com.generate.model.MongoOptions;
 import com.generate.model.ValNode;
-import com.generate.mongo.MongoExcludeTable;
 import com.generate.utils.Assert;
 import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
@@ -23,16 +23,14 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
-import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +38,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
 
@@ -49,7 +46,7 @@ public class MainController implements Initializable {
     private static DB selectedDB;
 
     @FXML
-    public ListView tableListView;
+    public TreeView treeView;
     @FXML
     public TextField fieldProjectPath;
     @FXML
@@ -98,35 +95,32 @@ public class MainController implements Initializable {
             logger.warn("【当前数据库：{},未获取到表存在】",db.getName());
             return;
         }
-        selectedDB = db;
-        //将表名称填充至tableListView
-        fillTableAttr(collectionNameSet);
         //设置事件绑定
         tableItemListenerBind();
     }
 
-    private void fillTableAttr(Set<String> collectionNameSet) {
-
-        Set<String> tableNameSet = collectionNameSet
-                .stream()
-                .filter(tableName ->(!MongoExcludeTable.getTableNameSet().contains(tableName))).collect(Collectors.toSet());
-
-        ObservableList<String> strList = FXCollections.observableArrayList(tableNameSet);
-
-        tableListView.setItems(strList);
-
-        tableListView.setCellFactory(new Callback<ListView, ListCell>() {
-            @Override
-            public ListCell call(ListView param) {
-                return new HBoxCell();
-            }
+    /**
+     * 给树添加节点
+     */
+    private void fillTreeViewItem(List<MongoOptions> configs) {
+        TreeItem rootTreeItem = treeView.getRoot();
+        rootTreeItem.getChildren().clear();
+        configs.forEach(node ->{
+            TreeItem<String> treeItem = new TreeItem<>();
+            treeItem.setValue(node.getSaveName());
+            ImageView dbImage = new ImageView("img/computer.png");
+            dbImage.setFitHeight(16);
+            dbImage.setFitWidth(16);
+            dbImage.setUserData(node);
+            treeItem.setGraphic(dbImage);
+            rootTreeItem.getChildren().add(treeItem);
         });
     }
 
     private void tableItemListenerBind() {
-        fieldTableName.textProperty().bind(tableListView.getSelectionModel().selectedItemProperty());
+        fieldTableName.textProperty().bind(treeView.getSelectionModel().selectedItemProperty());
 
-        tableListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
+        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
             String entityName = CommonUtils.entityJavaModelName(newValue.toString());
             fieldEntityName.setText(CommonUtils.getCapitalcaseChar(entityName));
         });
@@ -141,7 +135,28 @@ public class MainController implements Initializable {
     }
 
     public void clickDataSourceConfigImage(MouseEvent mouseEvent) {
-        ConfigGui.showWindow();
+        try {
+            ConfigGui.showAndWait();
+            //刷新数据源
+            refreshDataSource();
+        } catch (Exception e) {
+            logger.error("【加载Config.xml失败 e:】{}",e.getMessage());
+        }
+    }
+
+    public void refreshDataSource(){
+        //从dataSource.ini中获取所有的数据源
+        IConfig iConfig = new MongoConfigControl();
+        try {
+            List<MongoOptions> allConfigList = iConfig.readAllConfigByList();
+            treeView.setShowRoot(false);
+            treeView.setRoot(new TreeItem<>());
+            if(!CommonUtils.isEmpty(allConfigList)){
+                fillTreeViewItem(allConfigList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickConfigImage(MouseEvent mouseEvent) {
@@ -216,7 +231,9 @@ public class MainController implements Initializable {
 
             ValNode node = new ValNode();
             node.setAttrName(field);
-            node.setFieldType(modelDBObject.get(field).getClass().getName().split("\\.")[2]);
+            String fieldType = modelDBObject.get(field).getClass().getName().split("\\.")[2];
+            node.setFieldType(fieldType);
+
             node.setNeedAnnotation(needAnnotationField.isSelected());
             nodeList.add(node);
         });

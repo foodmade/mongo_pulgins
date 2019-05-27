@@ -7,8 +7,6 @@
     -fx-font-size: 12px;
     /*-jfx-button-type: RAISED;*/
     -fx-background-color: #5599FF;
-    -fx-pref-width: 90;
-    -fx-pref-height: 8;
     -fx-text-fill: BLACK;
 }
 
@@ -17,8 +15,6 @@
     -fx-font-size: 12px;
     /*-jfx-button-type: RAISED;*/
     -fx-background-color: #E5E5E5;
-    -fx-pref-width: 90;
-    -fx-pref-height: 8;
     -fx-text-fill: BLACK;
 }
 

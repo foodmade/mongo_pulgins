@@ -20,6 +20,18 @@ public class ValNode {
      * 属性名首字母大写
      */
     private String flcapitalName;
+    /**
+     * 需要导入的第三方jar路径集合
+     */
+    private String exportPackageUrls;
+
+    public String getExportPackageUrls() {
+        return exportPackageUrls;
+    }
+
+    public void setExportPackageUrls(String exportPackageUrls) {
+        this.exportPackageUrls = exportPackageUrls;
+    }
 
     public boolean isNeedAnnotation() {
         return needAnnotation;

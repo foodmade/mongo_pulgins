@@ -25,16 +25,12 @@ public class CreateJavaImpl implements ICreateJava {
 
     @Override
     public void createDao(String fileName, String packageUrl, String outPath) {
-        //获取模板
         Template template = loadTemplate(EngineConst._ENGINE_DAO_TEMPLATE_VM_DEFAULT_PATH);
-        //写入Java文件
         writeJavaFile(fileName,outPath,null,packageUrl,template);
     }
 
     private Template loadTemplate(String vmPath){
-        //获取模板引擎
         VelocityEngine ve = EngineUtils.loadVelocityEngine();
-        //获取模板
         return ve.getTemplate(vmPath);
     }
 

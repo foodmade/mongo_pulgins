@@ -9,6 +9,4 @@ public class CommentUtilSource {
         information.setTitle(title);
         information.showAndWait();
     }
-
-
 }

@@ -1,11 +1,16 @@
 package com.controller;
 
+import com.generate.common.deploy.IConfig;
+import com.generate.common.deploy.MongoConfigControl;
+import com.generate.common.exception.CommonException;
 import com.generate.common.exception.ParamsInvalidException;
 import com.generate.listener.MsgListener;
 import com.generate.model.MongoOptions;
 import com.generate.model.MsgNode;
 import com.generate.mongo.DataSourceLinkerFetch;
+import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
+import com.generate.utils.Const;
 import com.gui.ConfigGui;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
@@ -45,22 +50,37 @@ public class AuthorController implements Initializable {
     @FXML
     public JFXButton clearButton;
     @FXML
+    public TextField saveNameField;
+    @FXML
     private JFXButton submit;
 
-    public void submitConfig() throws IOException {
+    public void submitConfig() {
         paramsCheck();
         //连接数据库
         DataSourceLinkerFetch linkerFetch = testMongoDB();
-
         //监控链接获取器是否已经完成连接
         DB db = monitorLinkerIsFinish(linkerFetch);
         if(db == null){
             return;
         }
-        //缓存至内存
-//        DBCacheControl.putDB(dataNameField.getText(),db);
-        ConfigGui.hideWindow();
-        MainGui.openWindow(null,db);
+        //将配置保存至ini配置文件中
+        //这儿暂时使用ini配置文件来记录数据库信息(暂时没找到更好的办法) 如果有类似sqllite轻量级数据库再做切换
+        saveMongoLinkerConfig();
+        ConfigGui.closeWindow();
+    }
+
+    private void saveMongoLinkerConfig() {
+
+        MongoOptions configNode = installMongoOption();
+
+        IConfig configHelper = new MongoConfigControl();
+        ((MongoConfigControl) configHelper).setConfig(configNode.getSaveName(),configNode);
+        try {
+            configHelper.addConfig();
+        } catch (Exception e) {
+            CommentUtilSource.alertMessage(Const._TIPS,"初始化数据源出现异常！！！", Alert.AlertType.ERROR);
+            throw new CommonException("【保存mongo配置失败 e:】"+e.getMessage()+"");
+        }
     }
 
     /**
@@ -100,7 +120,10 @@ public class AuthorController implements Initializable {
         options.setPassword(pwdField.getText());
         options.setUser(userField.getText());
         options.setDataName(dataNameField.getText());
-
+        options.setSaveName(saveNameField.getText());
+        if(CommonUtils.isEmpty(saveNameField.getText())){
+            options.setSaveName(hostField.getText());
+        }
         return options;
     }
 

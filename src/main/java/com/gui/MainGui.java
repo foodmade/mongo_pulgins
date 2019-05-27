@@ -2,6 +2,7 @@ package com.gui;
 
 import com.controller.MainController;
 import com.mongodb.DB;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MainGui implements Initializable {
+public class MainGui extends Application {
 
     private static Stage primaryStage;
 
@@ -31,20 +32,26 @@ public class MainGui implements Initializable {
         return MainGui.primaryStage;
     }
 
-    public static void openWindow(ActionEvent event, DB db) throws IOException {
+/*    public static void openWindow(ActionEvent event, DB db) throws IOException {
         Stage primaryStage=new Stage();
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ConfigGui.class.getClassLoader().getResource("fxml/Main.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(MainGui.class.getClassLoader().getResource("fxml/Main.fxml")));
         Parent root = loader.load();
         MainController controller = loader.getController();
-        primaryStage.setTitle("Auth");
         primaryStage.setScene(new Scene(root));
         controller.initDataSourceInfo(db);
         MainGui.primaryStage = primaryStage;
         showWindow();
-    }
+    }*/
+
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(MainGui.class.getClassLoader().getResource("fxml/Main.fxml")));
+        Parent root = loader.load();
+        MainController controller = loader.getController();
+        primaryStage.setScene(new Scene(root));
+        MainGui.primaryStage = primaryStage;
+        controller.refreshDataSource();
+        showWindow();
     }
 }

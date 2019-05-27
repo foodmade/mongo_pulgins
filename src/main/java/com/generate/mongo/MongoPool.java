@@ -3,6 +3,7 @@ package com.generate.mongo;
 import com.mongodb.MongoClient;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class MongoPool {
 
@@ -21,5 +22,9 @@ public class MongoPool {
 
     public static MongoClient getMongoClientToPool(String key){
         return mongoMapperPool.get(key);
+    }
+
+    public static HashMap<String, MongoClient> getMongoMapperPool() {
+        return mongoMapperPool;
     }
 }

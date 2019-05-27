@@ -2,10 +2,6 @@
     -fx-font-family: Microsoft YaHei UI;
 }
 
-#rootPane{
-    -fx-background-color: #ddd;
-}
-
 #sourceConfigView{
     -fx-cursor: pointer;
 }
@@ -68,7 +64,7 @@
     -fx-background-color: rgba(130, 191, 158, 0.59);
 }
 
-#tableListView{
+#treeView{
     -fx-background-color: rgba(44, 64, 145, 0.32);
     -fx-border-color: rgba(159, 118, 18, 0.3);
     -fx-background-radius: 0em;

@@ -1,8 +1,9 @@
 package com.generate.model;
 
+import com.abs.Node;
 import com.generate.mongo.MongoDBUtil;
 
-public class MongoOptions {
+public class MongoOptions extends Node {
 
     private String host;
 
@@ -14,7 +15,17 @@ public class MongoOptions {
 
     private Integer port;
 
+    private String saveName;
+
     private String url;
+
+    public String getSaveName() {
+        return saveName;
+    }
+
+    public void setSaveName(String saveName) {
+        this.saveName = saveName;
+    }
 
     public String getUrl() {
         return MongoDBUtil.buildMongoUrlKey(host,user,password,dataName,port);
