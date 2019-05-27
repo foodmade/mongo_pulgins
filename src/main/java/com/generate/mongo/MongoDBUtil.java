@@ -1,9 +1,11 @@
 package com.generate.mongo;
 
+import com.generate.common.comment.DialogComment;
 import com.generate.common.exception.DataSourceLinkerException;
 import com.generate.common.exception.ParamsInvalidException;
 import com.generate.listener.MsgListener;
 import com.generate.model.MongoOptions;
+import com.generate.utils.Const;
 import com.mongodb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,7 @@ public class MongoDBUtil {
             } catch (Exception e){
                 logger.error(_LOG_PREFIX + " {}",e.getMessage());
                 MsgListener.processMsg(_MSG_TYPE_DEFAULT,"连接Mongo服务器异常：" + e.getMessage());
+                DialogComment.detailMessageDialog(Const._ERROR,"连接Mongo服务器异常","",e);
                 throw new DataSourceLinkerException(_LOG_PREFIX + e.getMessage());
             }
         }
@@ -71,7 +74,7 @@ public class MongoDBUtil {
         } catch (Exception e) {
             MsgListener.processMsg(null,"连接数据库失败 o(╥﹏╥)o");
             MsgListener.processMsg(null,"失败信息：" + e.getMessage());
-            return true;
+            throw e;
         }
         return false;
     }

@@ -1,17 +1,12 @@
 package com.generate.utils;
 
 import com.generate.common.exception.CommonException;
-import com.abs.Node;
-import com.generate.model.MongoOptions;
-import javafx.scene.control.Alert;
-import org.ini4j.Ini;
-import org.ini4j.Profile;
+import com.abs.ConfigNode;
 import org.ini4j.Wini;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +44,7 @@ public class IniReader {
      * @param key  节点名称
      * @param cls  读取后转换的类
      */
-    public <T> T getIniConfig(String key, Class<? extends Node> cls) throws Exception {
+    public <T> T getIniConfig(String key, Class<? extends ConfigNode> cls) throws Exception {
         Assert.isNotNull(cls,"读取配置文件时,带转换的类加载器不能为空", CommonException.class);
         T configBean = null;
         try {
@@ -64,13 +59,13 @@ public class IniReader {
     /**
      * 添加配置文件节点
      * @param key   节点名称
-     * @param node  节点内容
+     * @param configNode  节点内容
      */
-    public void addIniConfig(String key, Node node) throws Exception {
-        Assert.isNotNull(node,"写入ini配置文件时,node节点为空",CommonException.class);
+    public void addIniConfig(String key, ConfigNode configNode) throws Exception {
+        Assert.isNotNull(configNode,"写入ini配置文件时,node节点为空",CommonException.class);
         Assert.isNotNull(ini,"ini加载器为空",CommonException.class);
 
-        HashMap<String,Object> nodeMap = ClassUtil.classTransMap(node);
+        HashMap<String,Object> nodeMap = ClassUtil.classTransMap(configNode);
         if(nodeMap == null){
             return;
         }
@@ -96,7 +91,7 @@ public class IniReader {
      * 获取配置文件中所有的配置 只包含配置信息 不包含配置key
      * @param t  转换的对象类构造器
      */
-    public <T extends Node> List<T> getAllConfig(T t) throws Exception {
+    public <T extends ConfigNode> List<T> getAllConfig(T t) throws Exception {
         Assert.isNotNull(ini,"ini加载器为空", CommonException.class);
 
         Set<String> keySet =  ini.keySet();
@@ -116,7 +111,7 @@ public class IniReader {
     /**
      * 获取配置文件中所有的配置项,带key
      */
-    public <T extends Node> HashMap<String,T> getAllConfigToMap(T t) throws Exception {
+    public <T extends ConfigNode> HashMap<String,T> getAllConfigToMap(T t) throws Exception {
         Assert.isNotNull(ini,"ini加载器为空", CommonException.class);
 
         Set<String> keySet =  ini.keySet();

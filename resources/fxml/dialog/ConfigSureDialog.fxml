@@ -8,8 +8,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="249.0" stylesheets="@../../static/css/dialog.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.ConfigSureDialogController">
    <children>
-      <TextField fx:id="outField" layoutX="28.0" layoutY="37.0" prefHeight="30.0" prefWidth="201.0" promptText="请输入配置名称" />
-      <JFXButton fx:id="sureButton" layoutX="32.0" layoutY="79.0" onAction="#sureConfig" prefHeight="0.0" prefWidth="78.0" text="确认" />
-      <JFXButton fx:id="quitButton" layoutX="139.0" layoutY="79.0" onAction="#exitDialog" prefHeight="0.0" prefWidth="78.0" text="取消" />
+      <TextField fx:id="outField" layoutX="84.0" layoutY="35.0" prefHeight="30.0" prefWidth="147.0" promptText="请输入配置名称" />
+      <JFXButton fx:id="sureButton" layoutX="27.0" layoutY="79.0" onAction="#sureConfig" prefHeight="0.0" prefWidth="78.0" text="确认" />
+      <JFXButton fx:id="quitButton" layoutX="138.0" layoutY="80.0" onAction="#exitDialog" prefHeight="0.0" prefWidth="78.0" text="取消" />
+      <Label layoutX="21.0" layoutY="35.0" prefHeight="30.0" prefWidth="62.0" text="配置名称：" />
    </children>
 </Pane>

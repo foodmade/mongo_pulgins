@@ -1,16 +1,20 @@
 package com.controller;
 
+import com.abs.ConfigNode;
 import com.custom.dialog.ConfigSureDialogStage;
+import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
 import com.generate.common.deploy.MongoConfigControl;
+import com.generate.common.exception.CommonException;
 import com.generate.common.exception.ParamsInvalidException;
 import com.generate.common.create.ICreateJava;
-import com.abs.Node;
 import com.generate.common.create.CreateJavaImpl;
-import com.generate.model.ConfigNode;
+import com.generate.model.ConfigConfigNode;
 import com.generate.model.MongoOptions;
 import com.generate.model.ValNode;
+import com.generate.mongo.MongoDBUtil;
+import com.generate.mongo.MongoPool;
 import com.generate.utils.Assert;
 import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
@@ -21,19 +25,22 @@ import com.jfoenix.controls.JFXButton;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import javafx.scene.Node;
+import javax.xml.soap.Text;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -118,13 +125,24 @@ public class MainController implements Initializable {
     }
 
     private void tableItemListenerBind() {
-        fieldTableName.textProperty().bind(treeView.getSelectionModel().selectedItemProperty());
+/*        fieldTableName.textProperty().bind(treeView.getSelectionModel().selectedItemProperty());
 
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
             String entityName = CommonUtils.entityJavaModelName(newValue.toString());
             fieldEntityName.setText(CommonUtils.getCapitalcaseChar(entityName));
+        });*/
+
+        treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<TreeItem<String>>)
+                (observableValue, oldItem, newItem) -> {
+            if(newItem == null || !newItem.getChildren().isEmpty()){
+                return;
+            }
+            fieldTableName.setText(newItem.getValue());
+            String entityName = CommonUtils.entityJavaModelName(newItem.getValue());
+            fieldEntityName.setText(CommonUtils.getCapitalcaseChar(entityName));
         });
     }
+
 
     public void fileChooser(ActionEvent actionEvent) {
         DirectoryChooser fileChooser = new DirectoryChooser ();
@@ -150,6 +168,10 @@ public class MainController implements Initializable {
         try {
             List<MongoOptions> allConfigList = iConfig.readAllConfigByList();
             treeView.setShowRoot(false);
+            //注册点击事件
+            addTreeViewEvent();
+            //注册子节点点击事件
+            tableItemListenerBind();
             treeView.setRoot(new TreeItem<>());
             if(!CommonUtils.isEmpty(allConfigList)){
                 fillTreeViewItem(allConfigList);
@@ -157,6 +179,47 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * treeView注册双击事件
+     */
+    public void addTreeViewEvent(){
+        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                TreeItem<String> treeItem = (TreeItem<String>)treeView.getSelectionModel().getSelectedItem();
+                MongoOptions options = (MongoOptions)treeItem.getGraphic().getUserData();
+                //连接数据库 加载详细dbDName信息
+                DB db = MongoDBUtil.getMongoDB(options);
+                try {
+                    Assert.isNotNull(db,"连接失败", CommonException.class);
+                } catch (Exception e) {
+                    CommentUtilSource.alertMessage(Const._ERROR,e.getMessage(), Alert.AlertType.ERROR);
+                }
+                Set<String> collectionNameSet = db.getCollectionNames();
+                if(collectionNameSet == null || collectionNameSet.isEmpty()){
+                    CommentUtilSource.alertMessage(Const._TIPS,"未获取到相关的表", Alert.AlertType.WARNING);
+                    return;
+                }
+                appendChildrenItemNode(treeItem,collectionNameSet);
+            }
+        });
+    }
+
+    private void appendChildrenItemNode(TreeItem<String> treeItem, Set<String> collectionNameSet) {
+
+        treeItem.getChildren().clear();
+
+        collectionNameSet.forEach(name ->{
+            TreeItem<String> childrenItem = new TreeItem<>(name);
+            ImageView dbImage = new ImageView("img/table4.png");
+            dbImage.setFitHeight(16);
+            dbImage.setFitWidth(16);
+            childrenItem.setGraphic(dbImage);
+            treeItem.getChildren().add(childrenItem);
+        });
+        //设置树为展开
+        treeItem.setExpanded(true);
     }
 
     public void clickConfigImage(MouseEvent mouseEvent) {
@@ -260,7 +323,7 @@ public class MainController implements Initializable {
                 return;
             }
             //获取当前输入参数
-            Node node = fetchConfig();
+            ConfigNode node = fetchConfig();
             //写入配置文件
             IConfig config = new KeepConfigControl().setConfig(configName,node);
             config.addConfig();
@@ -271,8 +334,8 @@ public class MainController implements Initializable {
         CommentUtilSource.alertMessage(Const._SUCCESS,"保存配置成功", Alert.AlertType.INFORMATION);
     }
 
-    private Node fetchConfig() {
-        ConfigNode node = new ConfigNode();
+    private ConfigNode fetchConfig() {
+        ConfigConfigNode node = new ConfigConfigNode();
         node.setDaoOutFilePath(daoOutFileField.getText());
         node.setDaoPackagePath(daoPackageField.getText());
         node.setFieldProjectPath(fieldProjectPath.getText());

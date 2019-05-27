@@ -1,8 +1,6 @@
 package com.generate.model;
 
-import com.abs.Node;
-
-public class ConfigNode extends Node {
+public class ConfigConfigNode extends com.abs.ConfigNode {
 
     /**
      * 项目所在目录地址

@@ -1,6 +1,6 @@
 package com.abs;
 
-public class Node {
+public class ConfigNode {
 
     private String type;
 }

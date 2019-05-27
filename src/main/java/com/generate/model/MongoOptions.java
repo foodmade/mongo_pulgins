@@ -1,9 +1,9 @@
 package com.generate.model;
 
-import com.abs.Node;
+import com.abs.ConfigNode;
 import com.generate.mongo.MongoDBUtil;
 
-public class MongoOptions extends Node {
+public class MongoOptions extends ConfigNode {
 
     private String host;
 
@@ -73,5 +73,18 @@ public class MongoOptions extends Node {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    @Override
+    public String toString() {
+        return "MongoOptions{" +
+                "host='" + host + '\'' +
+                ", user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                ", dataName='" + dataName + '\'' +
+                ", port=" + port +
+                ", saveName='" + saveName + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

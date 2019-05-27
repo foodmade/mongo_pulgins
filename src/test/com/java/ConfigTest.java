@@ -1,6 +1,6 @@
 package com.java;
 
-import com.generate.model.ConfigNode;
+import com.generate.model.ConfigConfigNode;
 import com.generate.utils.IniReader;
 
 public class ConfigTest {
@@ -12,7 +12,7 @@ public class ConfigTest {
 
         IniReader iniReader = new IniReader("D:\\util\\git_project\\mongo_plugins\\config.ini");
 
-        iniReader.getAllConfigToMap(new ConfigNode());
+        iniReader.getAllConfigToMap(new ConfigConfigNode());
 
     }
 }

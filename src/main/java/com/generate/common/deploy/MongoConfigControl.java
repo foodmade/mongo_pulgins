@@ -1,6 +1,6 @@
 package com.generate.common.deploy;
 
-import com.abs.Node;
+import com.abs.ConfigNode;
 import com.generate.common.exception.CommonException;
 import com.generate.model.MongoOptions;
 import com.generate.utils.Assert;
@@ -20,8 +20,8 @@ public class MongoConfigControl extends AbsConfig {
 
     @Override
     public void addConfig() throws Exception {
-        Assert.isNotNull(node,"【AddConfig MongoNode Is Not Must Null】", CommonException.class);
-        MongoOptions configNode = (MongoOptions) node;
+        Assert.isNotNull(configNode,"【AddConfig MongoNode Is Not Must Null】", CommonException.class);
+        MongoOptions configNode = (MongoOptions) this.configNode;
         FileUtils.judeFileExists(configPath);
         IniReader iniReader = new IniReader(configPath);
         iniReader.addIniConfig(nodeName,configNode);
@@ -34,7 +34,7 @@ public class MongoConfigControl extends AbsConfig {
     }
 
     @Override
-    public List<Node> readAllConfigByList() throws Exception {
+    public List<ConfigNode> readAllConfigByList() throws Exception {
         IniReader iniReader = new IniReader(configPath);
         return iniReader.getAllConfig(new MongoOptions());
     }

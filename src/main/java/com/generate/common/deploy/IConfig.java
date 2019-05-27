@@ -1,6 +1,6 @@
 package com.generate.common.deploy;
 
-import com.abs.Node;
+import com.abs.ConfigNode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,16 +15,16 @@ public interface IConfig {
     /**
      * 读取配置
      */
-    Node readConfig() throws Exception;
+    ConfigNode readConfig() throws Exception;
 
     /**
      * 获取所有配置项 返回List
      */
-    <V extends Node> List<V> readAllConfigByList() throws Exception;
+    <V extends ConfigNode> List<V> readAllConfigByList() throws Exception;
 
     /**
      * 获取所有配置项 返回Map
      */
-    <V extends Node> HashMap<String,V> readAllConfigByMap() throws Exception;
+    <V extends ConfigNode> HashMap<String,V> readAllConfigByMap() throws Exception;
 
 }

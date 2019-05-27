@@ -9,14 +9,14 @@ package $!{bean.packageUrl};
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 #end
-#foreach($node in $attrList)
-#if($node.fieldType == 'BasicDBList')
+#foreach($configNode in $attrList)
+#if($configNode.fieldType == 'BasicDBList')
 import com.mongodb.BasicDBList;
 #end
-#if($node.fieldType == 'BasicDBObject')
+#if($configNode.fieldType == 'BasicDBObject')
 import com.mongodb.BasicDBObject;
 #end
-#if($node.fieldType == 'DBObject')
+#if($configNode.fieldType == 'DBObject')
 import com.mongodb.DBObject;
 #end
 #end
@@ -32,25 +32,25 @@ import com.mongodb.DBObject;
 #end
 public class $!{bean.name} {
 
-#foreach($node in $attrList)
+#foreach($configNode in $attrList)
 #if($needAnnotion)
     @Field
 #end
-    private ${node.fieldType} ${node.attrName};
+    private ${configNode.fieldType} ${configNode.attrName};
 
 #end
-#foreach($node in $attrList)
+#foreach($configNode in $attrList)
     ## 声明Getter/Setter 函数名称变量
     #set($methodName = "")
     ## 将首字母第一位大写 赋值给methodName
-    #getLowercaseChar(${node.attrName})
+    #getLowercaseChar(${configNode.attrName})
 
-    public void set$methodName(${node.fieldType} ${node.attrName}){
-        this.${node.attrName} = ${node.attrName};
+    public void set$methodName(${configNode.fieldType} ${configNode.attrName}){
+        this.${configNode.attrName} = ${configNode.attrName};
     }
 
-    public ${node.fieldType} get$methodName(){
-        return this.${node.attrName};
+    public ${configNode.fieldType} get$methodName(){
+        return this.${configNode.attrName};
     }
 #end
 }

@@ -1,8 +1,8 @@
 package com.generate.common.deploy;
 
-import com.abs.Node;
+import com.abs.ConfigNode;
 import com.generate.common.exception.CommonException;
-import com.generate.model.ConfigNode;
+import com.generate.model.ConfigConfigNode;
 import com.generate.utils.Assert;
 import com.generate.utils.FileUtils;
 import com.generate.utils.IniReader;
@@ -20,26 +20,26 @@ public class KeepConfigControl extends AbsConfig {
 
     @Override
     public void addConfig() throws Exception {
-        Assert.isNotNull(node,"【AddConfig GenerateNode Is Not Must Null】", CommonException.class);
-        ConfigNode configNode = (ConfigNode)node;
+        Assert.isNotNull(configNode,"【AddConfig GenerateNode Is Not Must Null】", CommonException.class);
+        ConfigConfigNode configNode = (ConfigConfigNode) this.configNode;
         FileUtils.judeFileExists(configPath);
         IniReader iniReader = new IniReader(configPath);
         iniReader.addIniConfig(nodeName,configNode);
     }
 
     @Override
-    public ConfigNode readConfig() throws Exception {
+    public ConfigConfigNode readConfig() throws Exception {
         IniReader iniReader = new IniReader(configPath);
-        return iniReader.getIniConfig(nodeName,ConfigNode.class);
+        return iniReader.getIniConfig(nodeName, ConfigConfigNode.class);
     }
 
     @Override
-    public List<Node> readAllConfigByList() {
+    public List<ConfigNode> readAllConfigByList() {
         return null;
     }
 
     @Override
-    public HashMap<String, Node> readAllConfigByMap() throws Exception {
+    public HashMap<String, ConfigNode> readAllConfigByMap() throws Exception {
         return null;
     }
 }
