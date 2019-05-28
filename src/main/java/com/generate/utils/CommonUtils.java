@@ -46,8 +46,8 @@ public class CommonUtils {
             return Optional.of(arg)
                     .map(Object::toString)
                     .map(String::trim)
-                    .map(c -> c.equals("null"))
-                    .map(b -> b || arg.equals(""))
+                    .map(c -> c.equals(""))
+                    .map(b -> b || arg.equals("null"))
                     .map(a -> a || arg.equals("undefined"))
                     .orElse(false);
         } catch (Exception e) {
@@ -122,5 +122,20 @@ public class CommonUtils {
         //消除特殊符号
         String regex = "[^0-9a-zA-Z\\u4e00-\\u9fa5.，,。？“”]+";
         return name.replaceAll(regex,"");
+    }
+
+    /**
+     * 判断是否含有特殊字符
+     * @param str
+     * @return true为包含，false为不包含
+     */
+    public static boolean isSpecialChar(String str) {
+        if(isEmpty(str)){
+            return true;
+        }
+        String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.find();
     }
 }

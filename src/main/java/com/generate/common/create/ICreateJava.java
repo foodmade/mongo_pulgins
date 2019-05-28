@@ -1,6 +1,8 @@
 package com.generate.common.create;
 
+import com.generate.model.BaseGenerateNode;
 import com.generate.model.ValNode;
+import org.jetbrains.dekaf.core.BaseFederatedProvider;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,4 +32,6 @@ public interface ICreateJava {
      * todo:适用于有很多配置项
      */
     void createEntity(String fileName, List<ValNode> fieldList, String packageUrl, String outPath, HashMap<String,Object> otherConfig);
+
+    void createEntity(String fileName, BaseGenerateNode baseGenerateNode,String packageUrl,String outPath);
 }

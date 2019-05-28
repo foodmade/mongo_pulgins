@@ -53,8 +53,8 @@ public class EngineUtils {
      * 设置类属性
      * @param valNodeList  属性字段集合
      */
-    public static void loadVelocityContext(VelocityContext velocityContext, List<ValNode> valNodeList){
-        if(valNodeList == null || valNodeList.isEmpty()){
+    public static <T> void loadVelocityContext(VelocityContext velocityContext, T valNodeList){
+        if(valNodeList == null){
             return;
         }
 

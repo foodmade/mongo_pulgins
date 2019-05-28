@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="443.0" prefWidth="308.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.LoginController">
+   <children>
+      <JFXTextField labelFloat="true" layoutX="43.0" layoutY="32.0" prefHeight="31.0" prefWidth="240.0" promptText=" 保存名称" />
+      <JFXTextField labelFloat="true" layoutX="43.0" layoutY="88.0" prefHeight="31.0" prefWidth="240.0" promptText=" 主机地址" />
+      <JFXTextField labelFloat="true" layoutX="43.0" layoutY="147.0" prefHeight="31.0" prefWidth="240.0" promptText=" 端口" />
+      <JFXTextField labelFloat="true" layoutX="43.0" layoutY="206.0" prefHeight="31.0" prefWidth="240.0" promptText=" 用户名" />
+      <JFXPasswordField layoutX="43.0" layoutY="267.0" prefHeight="31.0" prefWidth="240.0" promptText=" 密码" />
+      <JFXTextField labelFloat="true" layoutX="43.0" layoutY="328.0" prefHeight="31.0" prefWidth="240.0" promptText=" 数据库名称" />
+      <HBox layoutX="83.0" layoutY="383.0" prefHeight="43.0" prefWidth="200.0">
+         <children>
+            <JFXButton prefHeight="43.0" prefWidth="69.0" text="保存" />
+            <JFXButton prefHeight="43.0" prefWidth="69.0" text="测试" />
+            <JFXButton prefHeight="43.0" prefWidth="69.0" text="重置" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

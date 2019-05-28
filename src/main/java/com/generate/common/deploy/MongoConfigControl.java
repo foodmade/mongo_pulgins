@@ -35,7 +35,7 @@ public class MongoConfigControl extends AbsConfig {
 
     @Override
     public void removeConfig() throws Exception {
-        Assert.isNotNull(nodeName,"【removeConfig NodeName Is Not Must Null】", CommonException.class);
+        Assert.isNotNull(nodeName,"【removeConfig MongoNode Is Not Must Null】", CommonException.class);
 
         IniReader iniReader = new IniReader(configPath);
         iniReader.removeNodeConfig(nodeName);

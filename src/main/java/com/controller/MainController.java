@@ -2,6 +2,7 @@ package com.controller;
 
 import com.abs.ConfigNode;
 import com.custom.dialog.ConfigSureDialogStage;
+import com.custom.dialog.LoginDialogStage;
 import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
@@ -10,11 +11,11 @@ import com.generate.common.exception.CommonException;
 import com.generate.common.exception.ParamsInvalidException;
 import com.generate.common.create.ICreateJava;
 import com.generate.common.create.CreateJavaImpl;
+import com.generate.model.BaseGenerateNode;
 import com.generate.model.ConfigConfigNode;
 import com.generate.model.MongoOptions;
 import com.generate.model.ValNode;
 import com.generate.mongo.MongoDBUtil;
-import com.generate.mongo.MongoPool;
 import com.generate.utils.Assert;
 import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
@@ -25,11 +26,9 @@ import com.jfoenix.controls.JFXButton;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,8 +38,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javafx.scene.Node;
-import javax.xml.soap.Text;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -292,13 +290,13 @@ public class MainController implements Initializable {
 
     private void createEntity() throws ParamsInvalidException,Exception{
 
-        String entityName = Assert.isNotNull(fieldEntityName.getText(),"Java实体类名不能为空", ParamsInvalidException.class);
-        String path = Assert.isNotNull(fieldProjectPath.getText(),"项目所在目录不能为空", ParamsInvalidException.class);
+        String entityName  = Assert.isNotNull(fieldEntityName.getText(),"Java实体类名不能为空", ParamsInvalidException.class);
+        String path        = Assert.isNotNull(fieldProjectPath.getText(),"项目所在目录不能为空", ParamsInvalidException.class);
         String packagePath = Assert.isNotNull( packageField.getText(),"包路径不能为空", ParamsInvalidException.class);
         String outFilePath = Assert.isNotNull( outFileField.getText(),"包存放目录不能为空", ParamsInvalidException.class);
-        String tableName = Assert.isNotNull( fieldTableName.getText(),"Java实体类名称不能为空", ParamsInvalidException.class);
+        Assert.isNotNull( fieldTableName.getText(),"Java实体类名称不能为空", ParamsInvalidException.class);
         //读取选择表中的字段信息
-        List<ValNode> attrList = readSelectedTableFieldInfo(tableName);
+        List<ValNode> attrList = assembleValNodes();
         if(attrList == null){
             return;
         }
@@ -307,12 +305,15 @@ public class MainController implements Initializable {
     }
 
 
-    private List<ValNode> readSelectedTableFieldInfo(String tableName) {
+    private List<ValNode> assembleValNodes() {
 
         if(selectedDB == null){
             CommentUtilSource.alertMessage("提示","Mongo连接为空,请重新打开软件初始化", Alert.AlertType.ERROR);
             return null;
         }
+
+        String tableName = fieldTableName.getText();
+
         DBCollection collection = selectedDB.getCollection(tableName);
 
         DBObject modelDBObject;
@@ -331,16 +332,20 @@ public class MainController implements Initializable {
             if("_id".equals(field)) {
                 return;
             }
-
             ValNode node = new ValNode();
             node.setAttrName(field);
             String fieldType = modelDBObject.get(field).getClass().getName().split("\\.")[2];
             node.setFieldType(fieldType);
-
             node.setNeedAnnotation(needAnnotationField.isSelected());
             nodeList.add(node);
         });
         return nodeList;
+    }
+
+    private BaseGenerateNode parserFieldInfo(){
+        BaseGenerateNode baseGenerateNode = new BaseGenerateNode();
+        baseGenerateNode.setValNodes(assembleValNodes());
+        return baseGenerateNode;
     }
 
     @Override
@@ -406,5 +411,10 @@ public class MainController implements Initializable {
         ConfigSureDialogController controller = configSureDialogStage.getController();
         configSureDialogStage.showAndWait();
         return controller.getConfigName();
+    }
+
+    private void openLoginDialog() throws IOException {
+        LoginDialogStage loginDialogStage = new LoginDialogStage();
+        loginDialogStage.showAndWait();
     }
 }
