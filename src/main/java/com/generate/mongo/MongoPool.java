@@ -27,4 +27,8 @@ public class MongoPool {
     public static HashMap<String, MongoClient> getMongoMapperPool() {
         return mongoMapperPool;
     }
+
+    public static void removMongoClient(String key){
+        mongoMapperPool.remove(key);
+    }
 }

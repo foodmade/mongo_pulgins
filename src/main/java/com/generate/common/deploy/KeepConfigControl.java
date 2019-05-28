@@ -34,6 +34,11 @@ public class KeepConfigControl extends AbsConfig {
     }
 
     @Override
+    public void removeConfig() {
+
+    }
+
+    @Override
     public List<ConfigNode> readAllConfigByList() {
         return null;
     }

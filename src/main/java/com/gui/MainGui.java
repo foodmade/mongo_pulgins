@@ -51,6 +51,7 @@ public class MainGui extends Application {
         MainController controller = loader.getController();
         primaryStage.setScene(new Scene(root));
         MainGui.primaryStage = primaryStage;
+        controller.registerTreeViewEvent();
         controller.refreshDataSource();
         showWindow();
     }

@@ -127,4 +127,13 @@ public class IniReader {
         });
         return configMap;
     }
+
+    /**
+     * 删除节点
+     * @param nodeName 节点名称
+     */
+    public void removeNodeConfig(String nodeName) throws Exception {
+        Assert.isNotNull(ini,"ini加载器为空", CommonException.class);
+        ini.remove(ini.get(nodeName));
+    }
 }

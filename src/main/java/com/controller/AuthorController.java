@@ -165,9 +165,10 @@ public class AuthorController implements Initializable {
             for (;;){
                 try {
                     MsgNode node = MsgListener.popMsgNode();
-                    if(node != null) {
-                        consoleLog(node.getMsg());
+                    if(node == null || node.getExpire_time() < System.currentTimeMillis()){
+                        continue;
                     }
+                    consoleLog(node.getMsg());
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {

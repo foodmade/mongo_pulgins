@@ -2,7 +2,6 @@ package com.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -30,6 +29,7 @@ public class ConfigGui extends Application {
         }
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ConfigGui.class.getClassLoader().getResource("fxml/Config.fxml")));
         Parent root = loader.load();
+        loader.getController();
         primaryStage.setScene(new Scene(root));
         ConfigGui.primaryStage = primaryStage;
     }

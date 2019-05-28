@@ -125,13 +125,6 @@ public class MainController implements Initializable {
     }
 
     private void tableItemListenerBind() {
-/*        fieldTableName.textProperty().bind(treeView.getSelectionModel().selectedItemProperty());
-
-        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)->{
-            String entityName = CommonUtils.entityJavaModelName(newValue.toString());
-            fieldEntityName.setText(CommonUtils.getCapitalcaseChar(entityName));
-        });*/
-
         treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<TreeItem<String>>)
                 (observableValue, oldItem, newItem) -> {
             if(newItem == null || !newItem.getChildren().isEmpty()){
@@ -168,17 +161,64 @@ public class MainController implements Initializable {
         try {
             List<MongoOptions> allConfigList = iConfig.readAllConfigByList();
             treeView.setShowRoot(false);
-            //注册点击事件
-            addTreeViewEvent();
-            //注册子节点点击事件
-            tableItemListenerBind();
             treeView.setRoot(new TreeItem<>());
             if(!CommonUtils.isEmpty(allConfigList)){
                 fillTreeViewItem(allConfigList);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("【刷新数据源出现异常 e:】{}",e.getMessage());
+            DialogComment.detailMessageDialog(Const._ERROR,"出现未知错误","",e);
         }
+    }
+
+    public void registerTreeViewEvent(){
+        //注册根节点菜单栏
+        registerNodeMenu();
+        //注册点击事件
+        addTreeViewEvent();
+        //注册子节点点击事件
+        tableItemListenerBind();
+    }
+
+    private void registerNodeMenu() {
+
+        ContextMenu menu     = new ContextMenu();
+        MenuItem editItem    = new MenuItem("编辑连接");
+        MenuItem removeItem  = new MenuItem("删除连接");
+        MenuItem refreshItem = new MenuItem("刷新连接");
+
+        menu.getItems().addAll(editItem,refreshItem,removeItem);
+        treeView.setContextMenu(menu);
+
+        //设置菜单点击事件
+        editItem.setOnAction(e ->{
+            System.out.println("点击编辑菜单");
+        });
+
+        removeItem.setOnAction(e -> {
+            removeDataSource();
+            refreshDataSource();
+        });
+
+        refreshItem.setOnAction(e -> {
+            refreshDataSource();
+        });
+    }
+
+    private void removeDataSource() {
+        TreeItem<String> treeItem = (TreeItem<String>)treeView.getSelectionModel().getSelectedItem();
+        MongoOptions options = (MongoOptions)treeItem.getGraphic().getUserData();
+        //删除ini配置文件中的内容
+        IConfig configHelper = new MongoConfigControl();
+        ((MongoConfigControl) configHelper).setConfig(options.getSaveName());
+        try {
+            configHelper.removeConfig();
+        } catch (Exception e) {
+            DialogComment.detailMessageDialog(Const._ERROR,"删除节点失败","",e);
+            return;
+        }
+        //删除缓存中的节点
+        MongoDBUtil.removeMongoDB(options);
     }
 
     /**

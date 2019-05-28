@@ -63,6 +63,14 @@ public class MongoDBUtil {
         return getMongoDB(mongoOptions.getHost(),mongoOptions.getUser(),mongoOptions.getPassword(),mongoOptions.getDataName(),mongoOptions.getPort());
     }
 
+    public static void removeMongoDB(MongoOptions mongoOptions){
+        removeCacheMongo(mongoOptions.getHost(),mongoOptions.getUser(),mongoOptions.getPassword(),mongoOptions.getDataName(),mongoOptions.getPort());
+    }
+
+    public static void removeCacheMongo(String host, String user, String password, String dataName, Integer port){
+        MongoPool.removMongoClient(buildMongoUrlKey(host, user, password, dataName, port));
+    }
+
     private static boolean checkConnectorIsUsable(MongoClient mongoClient,String dataName){
         if(mongoClient == null){
             return true;

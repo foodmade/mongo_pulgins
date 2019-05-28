@@ -27,4 +27,9 @@ public interface IConfig {
      */
     <V extends ConfigNode> HashMap<String,V> readAllConfigByMap() throws Exception;
 
+    /**
+     * 删除配置
+     */
+    void removeConfig() throws Exception;
+
 }

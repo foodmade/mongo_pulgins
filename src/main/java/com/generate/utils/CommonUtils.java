@@ -1,5 +1,6 @@
 package com.generate.utils;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,18 +41,28 @@ public class CommonUtils {
          return str;
      }
 
-     public static boolean isEmpty(Object...args){
-        for (Object o:args){
-            if(isEmpty(o)){
+    public static <T> boolean isEmpty(T arg){
+        try {
+            return Optional.of(arg)
+                    .map(Object::toString)
+                    .map(String::trim)
+                    .map(c -> c.equals("null"))
+                    .map(b -> b || arg.equals(""))
+                    .map(a -> a || arg.equals("undefined"))
+                    .orElse(false);
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
+    public static <T> boolean isEmpty(T...args){
+        for (T t:args){
+            if(isEmpty(t)){
                 return true;
             }
         }
         return false;
-     }
-
-     public static boolean isEmpty(Object o){
-         return o == null || "".equals(o);
-     }
+    }
 
     // 判断一个字符串是否都为数字
     public static boolean isDigit(String strNum) {
