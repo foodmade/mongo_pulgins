@@ -7,6 +7,7 @@ import com.generate.utils.DateUtils;
 import com.generate.utils.IniReader;
 
 import java.util.Date;
+import java.util.Optional;
 
 public class ConfigTest {
 
@@ -18,8 +19,7 @@ public class ConfigTest {
         IniReader iniReader = new IniReader("D:\\util\\git_project\\mongo_plugins\\config.ini");
 
         iniReader.getAllConfigToMap(new ConfigConfigNode());*/
-
-        System.out.println(DateUtils.formatDate(DateUtils.getAfterDayTime(new Date(),-20),"dd"));
+        System.out.println(DateUtils.getDayOfWeek(DateUtils.formatYMD(new Date())));
 
     }
 }
