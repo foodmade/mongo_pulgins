@@ -27,7 +27,7 @@
       <TextField fx:id="dataNameField" layoutX="95.0" layoutY="235.0" prefHeight="32.0" prefWidth="210.0" promptText="movie" text="movie" />
       <TextArea fx:id="logTextArea" editable="false" layoutX="342.0" layoutY="2.0" prefHeight="382.0" prefWidth="238.0" wrapText="true" />
       <ComboBox fx:id="versionField" layoutX="95.0" layoutY="282.0" prefWidth="150.0" />
-      <Label layoutX="20.0" layoutY="20.0" prefHeight="15.0" prefWidth="61.0" styleClass="text-info" text="保存名称：" />
+      <Label layoutX="20.0" layoutY="20.0" prefHeight="16.0" prefWidth="68.0" styleClass="text-info" text="保存名称：" />
       <TextField fx:id="saveNameField" layoutX="95.0" layoutY="14.0" prefHeight="28.0" prefWidth="210.0" promptText="请输入名称~为空使用主机名" />
       <Separator layoutX="335.0" orientation="VERTICAL" prefHeight="385.0" prefWidth="3.0" />
    </children>

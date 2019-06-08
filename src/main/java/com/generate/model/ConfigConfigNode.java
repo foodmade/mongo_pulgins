@@ -34,6 +34,10 @@ public class ConfigConfigNode extends com.abs.ConfigNode {
      * 是否跳过_id和_class属性的生成
      */
     private boolean needIClass;
+    /**
+     * 添加时间
+     */
+    private String addTime;
 
     public String getFieldProjectPath() {
         return fieldProjectPath;
@@ -97,5 +101,15 @@ public class ConfigConfigNode extends com.abs.ConfigNode {
 
     public void setNeedIClass(boolean needIClass) {
         this.needIClass = needIClass;
+    }
+
+    @Override
+    public String getAddTime() {
+        return addTime;
+    }
+
+    @Override
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 }

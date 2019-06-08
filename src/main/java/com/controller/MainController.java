@@ -2,6 +2,7 @@ package com.controller;
 
 import com.abs.ConfigNode;
 import com.custom.dialog.ConfigSureDialogStage;
+import com.custom.dialog.ConfigViewDialogStage;
 import com.custom.dialog.LoginDialogStage;
 import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
@@ -16,10 +17,7 @@ import com.generate.model.ConfigConfigNode;
 import com.generate.model.MongoOptions;
 import com.generate.model.ValNode;
 import com.generate.mongo.MongoDBUtil;
-import com.generate.utils.Assert;
-import com.generate.utils.CommentUtilSource;
-import com.generate.utils.CommonUtils;
-import com.generate.utils.Const;
+import com.generate.utils.*;
 import com.gui.ConfigGui;
 import com.gui.MainGui;
 import com.jfoenix.controls.JFXButton;
@@ -260,10 +258,6 @@ public class MainController implements Initializable {
         treeItem.setExpanded(true);
     }
 
-    public void clickConfigImage(MouseEvent mouseEvent) {
-
-    }
-
     public void generateJava(ActionEvent actionEvent) {
         //开始生成jEntity代码
         try {
@@ -389,6 +383,7 @@ public class MainController implements Initializable {
         node.setNeedIClass(idClassField.isSelected());
         node.setOutFilePath(outFileField.getText());
         node.setPackagePath(packageField.getText());
+        node.setAddTime(DateUtils.formatYMDHMS(new Date()));
         return node;
     }
 
@@ -403,7 +398,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * 打开配置名称dialog
+     * 打开配置确认框
      * @return 配置名称
      */
     private String openConfigNameDialog() throws IOException {
@@ -411,6 +406,14 @@ public class MainController implements Initializable {
         ConfigSureDialogController controller = configSureDialogStage.getController();
         configSureDialogStage.showAndWait();
         return controller.getConfigName();
+    }
+
+    /**
+     * 打开配置管理界面
+     */
+    public void clickConfigImage(MouseEvent mouseEvent) throws IOException {
+        ConfigViewDialogStage configViewDialogStage = new ConfigViewDialogStage();
+        configViewDialogStage.showAndWait();
     }
 
     private void openLoginDialog() throws IOException {

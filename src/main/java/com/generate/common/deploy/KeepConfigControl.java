@@ -39,12 +39,14 @@ public class KeepConfigControl extends AbsConfig {
     }
 
     @Override
-    public List<ConfigNode> readAllConfigByList() {
-        return null;
+    public List<? extends ConfigNode> readAllConfigByList() throws Exception {
+        IniReader iniReader = new IniReader(configPath);
+        return iniReader.getAllConfig(new ConfigConfigNode());
     }
 
     @Override
-    public HashMap<String, ConfigNode> readAllConfigByMap() throws Exception {
-        return null;
+    public HashMap<String, ? extends ConfigNode> readAllConfigByMap() throws Exception {
+        IniReader iniReader = new IniReader(configPath);
+        return iniReader.getAllConfigToMap(new ConfigConfigNode());
     }
 }
