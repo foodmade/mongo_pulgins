@@ -34,8 +34,9 @@ public class KeepConfigControl extends AbsConfig {
     }
 
     @Override
-    public void removeConfig() {
-
+    public void removeConfig() throws Exception {
+        IniReader iniReader = new IniReader(configPath);
+        iniReader.removeNodeConfig(nodeName);
     }
 
     @Override

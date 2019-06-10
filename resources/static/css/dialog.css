@@ -18,12 +18,34 @@
     -fx-text-fill: BLACK;
 }
 
+#delButton{
+    -fx-padding: 0.4em 0.57em;
+    -fx-font-size: 10px;
+    -fx-background-color: rgb(162, 55, 60);
+    -fx-text-fill: BLACK;
+}
+
+#useButton{
+    -fx-padding: 0.4em 0.57em;
+    -fx-font-size: 10px;
+    -fx-background-color: rgb(85, 162, 85);
+    -fx-text-fill: BLACK;
+}
+
 #sureButton:hover {
     -fx-background-color: #5599FF;
 }
 
 #quitButton:hover {
     -fx-background-color: #79bcff;
+}
+
+#delButton:hover{
+    -fx-background-color: rgba(166, 44, 65, 0.76);
+}
+
+#useButton:hover{
+    -fx-background-color: rgb(107, 162, 121);
 }
 
 .table-column {

@@ -1,10 +1,10 @@
 package com.controller;
 
 import com.abs.ConfigNode;
+import com.custom.cell.TableViewButtonCell;
 import com.generate.common.deploy.KeepConfigControl;
 import com.generate.model.ConfigConfigNode;
 import com.generate.utils.CommonUtils;
-import com.generate.utils.DateUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
@@ -35,24 +34,34 @@ public class ConfigViewDialogController implements Initializable {
     public TableColumn timeColumn;
     @FXML
     public TableColumn operateColumn;
+    @FXML
+    public TableColumn remarksColumn;
+
+    public TableView getConfigTableView() {
+        return configTableView;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //初始化绑定器
         bindCellValueFactory();
+        //加载配置数据
+        refreshConfig();
+    }
 
-        //读取配置文件,加载配置
+    //刷新配置文件至表格
+    public void refreshConfig(){
         try {
+            this.configTableView.setItems(FXCollections.observableArrayList());
             HashMap<String,ConfigConfigNode> configConfigNodeHashMap =
                     (HashMap<String,ConfigConfigNode>)new KeepConfigControl().readAllConfigByMap();
 
             if(CommonUtils.isEmpty(configConfigNodeHashMap) || configConfigNodeHashMap.isEmpty()){
                 return;
             }
-
             logger.info("【配置文件读取数据：】 {}", configConfigNodeHashMap.toString());
-
             initDataToView(configConfigNodeHashMap);
+            this.configTableView.refresh();
         } catch (Exception e) {
             logger.error("【配置中心读取失败】" + e.getMessage());
         }
@@ -62,6 +71,7 @@ public class ConfigViewDialogController implements Initializable {
         configNameColumn.setCellValueFactory(new PropertyValueFactory<>("configName"));
         seqColumn.setCellValueFactory(new PropertyValueFactory<>("seq"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("addTime"));
+        operateColumn.setCellFactory(param -> new TableViewButtonCell(this));
     }
 
     private void initDataToView(HashMap<String, ConfigConfigNode> configConfigNodeHashMap) {

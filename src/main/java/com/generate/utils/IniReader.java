@@ -135,5 +135,6 @@ public class IniReader {
     public void removeNodeConfig(String nodeName) throws Exception {
         Assert.isNotNull(ini,"ini加载器为空", CommonException.class);
         ini.remove(ini.get(nodeName));
+        ini.store();
     }
 }

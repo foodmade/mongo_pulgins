@@ -1,4 +1,4 @@
-package com.custom;
+package com.custom.cell;
 
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
