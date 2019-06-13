@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="472.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.ConfigViewDialogController">
    <children>
-      <TableView fx:id="configTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="586.0" styleClass="table-column" stylesheets="@../../static/css/dialog.css">
+      <TableView fx:id="configTableView" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="586.0" styleClass="table-column" stylesheets="@../../static/css/dialog.css">
         <columns>
           <TableColumn fx:id="seqColumn" prefWidth="75.0" text="序号" />
           <TableColumn fx:id="configNameColumn" prefWidth="117.0" text="名称" />
