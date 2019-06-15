@@ -3,6 +3,9 @@ package com.controller;
 import com.abs.ConfigNode;
 import com.custom.cell.EditingCell;
 import com.custom.cell.TableViewButtonCell;
+import com.custom.evnet.AbsListenerEvent;
+import com.custom.evnet.EventSource;
+import com.custom.evnet.IListener;
 import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
@@ -33,7 +36,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ConfigViewDialogController implements Initializable {
+public class ConfigViewDialogController extends AbsListenerEvent implements Initializable  {
 
     private static Logger logger = LoggerFactory.getLogger(ConfigViewDialogController.class);
 
@@ -113,6 +116,17 @@ public class ConfigViewDialogController implements Initializable {
 
         configTableView.setItems(configNodes);
     }
+
+    @Override
+    public void setEventSource(EventSource source) {
+        super.eventSource = source;
+    }
+
+    @Override
+    public EventSource getEventSource() {
+        return eventSource;
+    }
+
 
     /**
      * 针对TableColumn双击编辑 处理器

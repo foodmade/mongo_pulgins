@@ -4,6 +4,7 @@ import com.abs.ConfigNode;
 import com.custom.dialog.ConfigSureDialogStage;
 import com.custom.dialog.ConfigViewDialogStage;
 import com.custom.dialog.LoginDialogStage;
+import com.custom.evnet.*;
 import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
@@ -42,9 +43,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class MainController implements Initializable {
+public class MainController extends Controller implements Initializable {
 
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
+
+    private EventSource eventSource;
 
     private static DB selectedDB;
 
@@ -343,7 +346,17 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCommentCss();
+    }
 
+    private void bindEvent() {
+
+        EventSource eventSource = new EventSource();
+
+        UseConfigEventListener listener = new UseConfigEventListener();
+        listener.setController(() -> ClassContext.getBean(MainController.class));
+        eventSource.addListener(listener);
+
+        this.eventSource = eventSource;
     }
 
     private void initCommentCss() {
@@ -385,6 +398,17 @@ public class MainController implements Initializable {
         return node;
     }
 
+    public void useConfigNode(ConfigConfigNode node){
+        daoOutFileField.setText(node.getDaoOutFilePath());
+        daoPackageField.setText(node.getDaoPackagePath());
+        fieldProjectPath.setText(node.getFieldProjectPath());
+        needAnnotationField.setSelected(node.isNeedAnnotation());
+        dbRefField.setSelected(node.isNeedDbRef());
+        idClassField.setSelected(node.isNeedIClass());
+        outFileField.setText(node.getOutFilePath());
+        packageField.setText(node.getPackagePath());
+    }
+
     /**
      * 清空输入参数
      */
@@ -410,7 +434,10 @@ public class MainController implements Initializable {
      * 打开配置管理界面
      */
     public void clickConfigImage(MouseEvent mouseEvent) throws IOException {
+        bindEvent();
+
         ConfigViewDialogStage configViewDialogStage = new ConfigViewDialogStage();
+        configViewDialogStage.setEventSource(eventSource);
         configViewDialogStage.showAndWait();
     }
 

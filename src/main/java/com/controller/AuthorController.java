@@ -117,14 +117,19 @@ public class AuthorController implements Initializable {
 
         MongoOptions options = new MongoOptions();
 
-        options.setHost(hostField.getText());
-        options.setPort(Integer.parseInt(portField.getText()));
-        options.setPassword(pwdField.getText());
-        options.setUser(userField.getText());
-        options.setDataName(dataNameField.getText());
-        options.setSaveName(saveNameField.getText());
-        if(CommonUtils.isEmpty(saveNameField.getText())){
-            options.setSaveName(hostField.getText());
+        try {
+            options.setHost(hostField.getText());
+            options.setPort(Integer.parseInt(portField.getText()));
+            options.setPassword(pwdField.getText());
+            options.setUser(userField.getText());
+            options.setDataName(dataNameField.getText());
+            options.setSaveName(saveNameField.getText());
+            if(CommonUtils.isEmpty(saveNameField.getText())){
+                options.setSaveName(hostField.getText());
+            }
+        }catch (Exception e){
+            MsgListener.processMsg(null,"参数缺失");
+            throw e;
         }
         return options;
     }

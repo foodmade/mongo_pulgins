@@ -2,13 +2,16 @@ package com.custom.cell;
 
 import com.abs.ConfigNode;
 import com.controller.ConfigViewDialogController;
+import com.custom.evnet.EventData;
 import com.custom.evnet.UseConfigEvent;
+import com.generate.common.comment.DialogComment;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
 import com.generate.common.exception.CommonException;
 import com.generate.model.ConfigConfigNode;
 import com.generate.utils.Assert;
 import com.generate.utils.CommonUtils;
+import com.generate.utils.Const;
 import com.generate.utils.SystemPathUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.Cursor;
@@ -67,7 +70,7 @@ public class TableViewButtonCell extends TableCell<ConfigNode,Boolean> {
                 e.printStackTrace();
             }
         });
-        
+
         //应用配置
         this.useButton.setOnAction(event -> {
             try {
@@ -81,9 +84,10 @@ public class TableViewButtonCell extends TableCell<ConfigNode,Boolean> {
 
                 ConfigConfigNode configConfigNode = (ConfigConfigNode) config.readConfig();
                 //渲染
-                System.out.println("读取到配置：" + configConfigNode.toString());
+                EventData eventData = new UseConfigEvent(configConfigNode);
+                configViewDialogController.getEventSource().RefreshEvent(eventData);
             }catch (Exception e){
-
+                DialogComment.detailMessageDialog(Const._ERROR,"异常","",e);
             }
         });
     }

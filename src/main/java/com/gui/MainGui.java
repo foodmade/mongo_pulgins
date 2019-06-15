@@ -1,6 +1,7 @@
 package com.gui;
 
 import com.controller.MainController;
+import com.generate.utils.ClassContext;
 import com.mongodb.DB;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -49,6 +50,7 @@ public class MainGui extends Application {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(MainGui.class.getClassLoader().getResource("fxml/Main.fxml")));
         Parent root = loader.load();
         MainController controller = loader.getController();
+        ClassContext.putBean(controller);
         primaryStage.setScene(new Scene(root));
         MainGui.primaryStage = primaryStage;
         controller.registerTreeViewEvent();

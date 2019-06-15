@@ -1,11 +1,20 @@
 package com.custom.evnet;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import javax.swing.event.ChangeEvent;
 
-public class UseConfigEvent implements EventHandler {
+public class UseConfigEvent extends ChangeEvent implements EventData{
+    /**
+     * Constructs a ChangeEvent object.
+     *
+     * @param source the Object that is the source of the event
+     *               (typically <code>this</code>)
+     */
+    public UseConfigEvent(Object source) {
+        super(source);
+    }
+
     @Override
-    public void handle(Event event) {
-        System.out.println("执行use按钮");
+    public Object getData() {
+        return source;
     }
 }

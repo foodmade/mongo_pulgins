@@ -1,6 +1,7 @@
 package com.custom.dialog;
 
 import com.controller.ConfigViewDialogController;
+import com.custom.evnet.EventSource;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,10 @@ public class ConfigViewDialogStage {
     private Stage stage;
 
     private ConfigViewDialogController controller;
+
+    public void setEventSource(EventSource eventSource) {
+        controller.setEventSource(eventSource);
+    }
 
     public ConfigViewDialogStage() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(ConfigSureDialogStage.class.getClassLoader().getResource("fxml/dialog/ConfigViewDialog.fxml")));
