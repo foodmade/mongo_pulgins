@@ -42,6 +42,16 @@ public class MongoConfigControl extends AbsConfig {
     }
 
     @Override
+    public void updateUpdate() {
+
+    }
+
+    @Override
+    public void updateNodeName() {
+
+    }
+
+    @Override
     public List<ConfigNode> readAllConfigByList() throws Exception {
         IniReader iniReader = new IniReader(configPath);
         return iniReader.getAllConfig(new MongoOptions());

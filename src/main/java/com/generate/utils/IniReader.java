@@ -2,6 +2,7 @@ package com.generate.utils;
 
 import com.generate.common.exception.CommonException;
 import com.abs.ConfigNode;
+import com.generate.model.ConfigConfigNode;
 import org.ini4j.Wini;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,5 +137,20 @@ public class IniReader {
         Assert.isNotNull(ini,"ini加载器为空", CommonException.class);
         ini.remove(ini.get(nodeName));
         ini.store();
+    }
+
+    /**
+     * 更新节点名称
+     */
+    public void updateNodeName(String oldNodeName,String newNodeName) throws Exception {
+        Assert.isNotNull(ini,"ini加载器为空",CommonException.class);
+        Assert.isNotNull(oldNodeName,"oldNodeName不能为空",CommonException.class);
+
+        ConfigConfigNode configConfigNode = getIniConfig(oldNodeName, ConfigConfigNode.class);
+        Assert.isNotNull(configConfigNode,"不存在的配置项：" + oldNodeName,CommonException.class);
+
+        removeNodeConfig(oldNodeName);
+
+        addIniConfig(newNodeName,configConfigNode);
     }
 }

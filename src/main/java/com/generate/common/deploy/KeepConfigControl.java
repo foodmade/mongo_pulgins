@@ -40,6 +40,17 @@ public class KeepConfigControl extends AbsConfig {
     }
 
     @Override
+    public void updateUpdate() {
+
+    }
+
+    @Override
+    public void updateNodeName() throws Exception {
+        IniReader iniReader = new IniReader(configPath);
+        iniReader.updateNodeName(nodeName,newNodeName);
+    }
+
+    @Override
     public List<? extends ConfigNode> readAllConfigByList() throws Exception {
         IniReader iniReader = new IniReader(configPath);
         return iniReader.getAllConfig(new ConfigConfigNode());

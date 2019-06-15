@@ -2,8 +2,13 @@ package com.custom.cell;
 
 import com.abs.ConfigNode;
 import com.controller.ConfigViewDialogController;
+import com.custom.evnet.UseConfigEvent;
 import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
+import com.generate.common.exception.CommonException;
+import com.generate.model.ConfigConfigNode;
+import com.generate.utils.Assert;
+import com.generate.utils.CommonUtils;
 import com.generate.utils.SystemPathUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.Cursor;
@@ -47,6 +52,7 @@ public class TableViewButtonCell extends TableCell<ConfigNode,Boolean> {
     }
 
     private void addOnAction(){
+        //刪除配置
         this.delButton.setOnAction(event -> {
             configViewDialogController.getConfigTableView().getSelectionModel().select(getTableRow().getIndex());
             String configName = ((ConfigNode)configViewDialogController.getConfigTableView().getSelectionModel().getSelectedItem()).getConfigName();
@@ -61,7 +67,25 @@ public class TableViewButtonCell extends TableCell<ConfigNode,Boolean> {
                 e.printStackTrace();
             }
         });
-        this.useButton.setOnAction(event -> System.out.println("点击应用按钮"));
+        
+        //应用配置
+        this.useButton.setOnAction(event -> {
+            try {
+                configViewDialogController.getConfigTableView().getSelectionModel().select(getTableRow().getIndex());
+                String configName = ((ConfigNode)configViewDialogController.getConfigTableView().getSelectionModel().getSelectedItem()).getConfigName();
+                Assert.isNotNull(configName,"无效的配置项", CommonException.class);
+
+                //读取配置
+                IConfig config = CommonUtils.buildKeepConfigActuator();
+                ((KeepConfigControl)config).setConfig(configName);
+
+                ConfigConfigNode configConfigNode = (ConfigConfigNode) config.readConfig();
+                //渲染
+                System.out.println("读取到配置：" + configConfigNode.toString());
+            }catch (Exception e){
+
+            }
+        });
     }
 
     @Override

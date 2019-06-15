@@ -32,4 +32,14 @@ public interface IConfig {
      */
     void removeConfig() throws Exception;
 
+    /**
+     * 更新配置
+     */
+    void updateUpdate();
+
+    /**
+     * 更新节点名称
+     */
+    void updateNodeName() throws Exception;
+
 }

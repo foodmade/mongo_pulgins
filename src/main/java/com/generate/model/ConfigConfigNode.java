@@ -112,4 +112,19 @@ public class ConfigConfigNode extends com.abs.ConfigNode {
     public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
+
+    @Override
+    public String toString() {
+        return "ConfigConfigNode{" +
+                "fieldProjectPath='" + fieldProjectPath + '\'' +
+                ", packagePath='" + packagePath + '\'' +
+                ", daoPackagePath='" + daoPackagePath + '\'' +
+                ", outFilePath='" + outFilePath + '\'' +
+                ", daoOutFilePath='" + daoOutFilePath + '\'' +
+                ", needAnnotation=" + needAnnotation +
+                ", needDbRef=" + needDbRef +
+                ", needIClass=" + needIClass +
+                ", addTime='" + addTime + '\'' +
+                '}';
+    }
 }

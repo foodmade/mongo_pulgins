@@ -85,8 +85,6 @@ public class MainController implements Initializable {
     @FXML
     public JFXButton clearMainConfigField;
 
-    TableColumn column;
-
     public void initDataSourceInfo(DB db) {
 
         if(db == null){

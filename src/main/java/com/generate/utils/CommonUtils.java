@@ -1,5 +1,8 @@
 package com.generate.utils;
 
+import com.generate.common.deploy.IConfig;
+import com.generate.common.deploy.KeepConfigControl;
+
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -137,5 +140,12 @@ public class CommonUtils {
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
         return m.find();
+    }
+
+    /**
+     * 获取参数配置构造器
+     */
+    public static IConfig buildKeepConfigActuator() {
+        return new KeepConfigControl();
     }
 }

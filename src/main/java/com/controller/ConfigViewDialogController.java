@@ -1,21 +1,30 @@
 package com.controller;
 
 import com.abs.ConfigNode;
+import com.custom.cell.EditingCell;
 import com.custom.cell.TableViewButtonCell;
+import com.generate.common.comment.DialogComment;
+import com.generate.common.deploy.IConfig;
 import com.generate.common.deploy.KeepConfigControl;
 import com.generate.model.ConfigConfigNode;
+import com.generate.utils.CommentUtilSource;
 import com.generate.utils.CommonUtils;
+import com.generate.utils.Const;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
+import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,12 +49,6 @@ public class ConfigViewDialogController implements Initializable {
     public TableColumn operateColumn;
     @FXML
     public TableColumn remarksColumn;
-
-    private static void handle(Event t) {
-        CellEditEvent event = (CellEditEvent)t;
-        ConfigConfigNode node = (ConfigConfigNode) event.getTableView().getItems().get(event.getTablePosition().getRow());
-        node.setConfigName(event.getNewValue()+"");
-    }
 
     public TableView getConfigTableView() {
         return configTableView;
@@ -83,10 +86,13 @@ public class ConfigViewDialogController implements Initializable {
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("addTime"));
         operateColumn.setCellFactory(param -> new TableViewButtonCell(this));
 
-        configNameColumn.setCellFactory(TextFieldTableCell.<ConfigConfigNode>forTableColumn());
-        configNameColumn.setOnEditCommit(event -> {
-            System.out.println(event.getSource().getClass().getName());
-        });
+        //自定义表单提交事件
+        Callback<TableColumn<ConfigNode, String>, TableCell<ConfigNode, String>> cellFactory = (
+                TableColumn<ConfigNode, String> p) -> new EditingCell();
+
+        configNameColumn.setCellFactory(cellFactory);
+        configNameColumn.setOnEditCommit(ColumnEditHandler::configNameEditHandle);
+
 
     }
 
@@ -114,12 +120,25 @@ public class ConfigViewDialogController implements Initializable {
     private static class ColumnEditHandler {
 
         private static void configNameEditHandle(Event t) {
-            CellEditEvent event = (CellEditEvent)t;
-            /*((ConfigConfigNode) event.getTableView().getItems().get(
-                    event.getTablePosition().getRow())
-            ).setConfigName(event.getNewValue()+"");*/
+            try {
+                CellEditEvent event = (CellEditEvent)t;
+                Object newConfigName = event.getNewValue();
+                Object oldConfigName = event.getOldValue();
+                if(CommonUtils.isEmpty(newConfigName)){
+                    return;
+                }
+                //设置新ConfigName
+                IConfig config = new KeepConfigControl();
+                ((KeepConfigControl) config).setConfig(oldConfigName + "", newConfigName + "");
+                config.updateNodeName();
 
-            System.out.println(event.getNewValue());
+                ((ConfigNode) event.getTableView().getItems().get(
+                        event.getTablePosition().getRow())
+                ).setConfigName(newConfigName + "");
+
+            }catch (Exception e){
+                DialogComment.detailMessageDialog(Const._ERROR,"","修改配置出现错误",e);
+            }
         }
     }
 }
