@@ -10,7 +10,6 @@ public class UseConfigEventListener implements EventListenerData {
 
     @Override
     public void handler(EventData eventData) {
-        System.out.println("执行器 success：" + eventData.getData().toString());
         MainController mainController = (MainController)controller;
         mainController.useConfigNode((ConfigConfigNode)eventData.getData());
     }
